@@ -20,4 +20,5 @@ public interface GestionPacienteInt extends Remote{
     public String enviarIndicadores(IndicadorDTO objIndicador) throws RemoteException; 
     public String alertaDomicilio(String mensaje) throws RemoteException; 
     public boolean establecerMaxPacientes(int num)throws RemoteException;
+    public int obtenerMaxPacientes()throws RemoteException;
 }
