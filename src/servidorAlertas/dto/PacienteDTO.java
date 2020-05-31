@@ -5,7 +5,6 @@
  */
 package servidorAlertas.dto;
 
-import clienteHabitacion.dto.*;
 import java.util.ArrayList;
 
 /**

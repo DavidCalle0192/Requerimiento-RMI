@@ -1,10 +1,13 @@
+package clienteHabitacion.dto;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package clienteHabitacion.dto;
 
+
+import clienteHabitacion.dto.IndicadorDTO;
 import java.util.ArrayList;
 
 /**
@@ -20,7 +23,7 @@ public class PacienteDTO {
     private String Direccion;
     ArrayList<IndicadorDTO> indicadores;
 
-    public PacienteDTO(int id, String tipo_id, String nombres, String apellidos, String Direccion) {
+    public PacienteDTO(int id, String tipo_id, String nombres, String apellidos, String Direccion, ArrayList<IndicadorDTO> indicadores) {
         this.id = id;
         this.tipo_id = tipo_id;
         this.nombres = nombres;
