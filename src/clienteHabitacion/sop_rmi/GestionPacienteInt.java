@@ -14,7 +14,7 @@ import java.rmi.RemoteException;
 
 /**
  *
- * @author usuario
+ * @author David Calle
  */
 public interface GestionPacienteInt extends Remote{
     

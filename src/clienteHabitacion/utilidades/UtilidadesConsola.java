@@ -8,6 +8,11 @@ package clienteHabitacion.utilidades;
 //import servidorAlertas.utilidades.*;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+
+/**
+ *
+ * @author David Calle
+ */
 public class UtilidadesConsola
 {
 	public static int leerEntero()

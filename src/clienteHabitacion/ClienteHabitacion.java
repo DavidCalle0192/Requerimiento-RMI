@@ -15,6 +15,9 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 /**
  *
  * @author David Calle
@@ -24,7 +27,7 @@ public class ClienteHabitacion {
     /**
      * @param args the command line arguments
      */
-     //atributos
+    //atributos
     //objeto remoto
     private static GestionPacienteInt objRemoto;
 
@@ -110,7 +113,6 @@ public class ClienteHabitacion {
             //System.out.println("Ingrese el id del paciente");
             //int id = UtilidadesConsola.leerEntero();
             //objPAciente.setId(id);
-
             System.out.println("Ingrese el tipo de id ");
             String tipo_id = UtilidadesConsola.leerCadena();
             objPAciente.setTipo_id(tipo_id);
@@ -129,41 +131,45 @@ public class ClienteHabitacion {
             System.out.println();
 
             System.out.println("Paciente registrado exitosamente.");
-        }else{
+        } else {
             System.out.println("A excedido el limite de pacientes registrados");
         }
 
     }
+    
 
     private static void Opcion2() {
 
-        //INICIALIZAR VARIABLES INIDICADORES        
-        Random fcr = new Random();
-        objIndicador.setFrecuenciaCardiaca((int) (60 + fcr.nextFloat() * (80 - 60)));
+        Timer timer = new Timer();
+        TimerTask task = new TimerTask() {
 
-        Random frr = new Random();
-        objIndicador.setFrecuenciaRespiratoria((int) (70 + frr.nextFloat() * (90 - 70)));
+            @Override
+            public void run() {
+                Random fcr = new Random();
+                objIndicador.setFrecuenciaCardiaca((int) (60 + fcr.nextFloat() * (80 - 60)));
 
-        Random ter = new Random();
-        objIndicador.setTemperatura((float) (36.2 + ter.nextFloat() * (37.2 - 36.2)));
+                Random frr = new Random();
+                objIndicador.setFrecuenciaRespiratoria((int) (70 + frr.nextFloat() * (90 - 70)));
 
-        objPAciente.agregarIndicador(objIndicador);
+                Random ter = new Random();
+                objIndicador.setTemperatura((float) (36.2 + ter.nextFloat() * (37.2 - 36.2)));
 
-        System.out.println("==Consulta de un Paciente==");
-        System.out.println("Ingrese el id del paciente");
-        int id = UtilidadesConsola.leerEntero();
-        if (objPAciente != null) {
-            System.out.println("Tipo ID: " + objPAciente.getTipo_id());
-            System.out.println("Nombres: " + objPAciente.getNombres());
-            System.out.println("Apellidos: " + objPAciente.getApellidos());
-            System.out.println("Dirección: " + objPAciente.getDireccion());
-            System.out.println("Frecuencia cardiaca: " + objIndicador.getFrecuenciaCardiaca()+" latidos por minuto");
-            System.out.println("Frecuencia respiratoria: " + objIndicador.getFrecuenciaRespiratoria()+" ventilaciones por minuto");
-            System.out.println("Temperatura: " + objIndicador.getTemperatura()+" grados centigrados");
+                objPAciente.agregarIndicador(objIndicador);
 
-        } else {
-            System.out.println("Usuario no encontrado");
-        }
+                System.out.println("Tipo ID: " + objPAciente.getTipo_id());
+                System.out.println("Nombres: " + objPAciente.getNombres());
+                System.out.println("Apellidos: " + objPAciente.getApellidos());
+                System.out.println("Dirección: " + objPAciente.getDireccion());
+                System.out.println("Frecuencia cardiaca: " + objIndicador.getFrecuenciaCardiaca() + " latidos por minuto");
+                System.out.println("Frecuencia respiratoria: " + objIndicador.getFrecuenciaRespiratoria() + " ventilaciones por minuto");
+                System.out.println("Temperatura: " + objIndicador.getTemperatura() + " grados centigrados");
+
+            }
+
+        };
+
+        timer.schedule(task, 0, 8000);
+
     }
 
 }

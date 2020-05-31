@@ -15,7 +15,7 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 /**
  *
- * @author user
+ * @author David Calle
  */
 public class UtilidadesRegistroC
 {   

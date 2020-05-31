@@ -11,7 +11,7 @@ import java.io.Serializable;
 
 /**
  *
- * @author usuario
+ * @author David Calle
  */
 public class IndicadorDTO implements Serializable {
     

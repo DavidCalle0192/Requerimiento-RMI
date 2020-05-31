@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 /**
  *
- * @author usuario
+ * @author David Calle
  */
 public class PacienteDTO {
     
