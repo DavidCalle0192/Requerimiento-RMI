@@ -1,9 +1,11 @@
+package clienteHabitacion.sop_rmi;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package clienteHabitacion.sop_rmi;
+
 
 import clienteHabitacion.dto.IndicadorDTO;
 import clienteHabitacion.dto.PacienteDTO;
@@ -12,7 +14,7 @@ import java.rmi.RemoteException;
 
 /**
  *
- * @author usuario
+ * @author David Calle
  */
 public interface GestionPacienteInt extends Remote{
     

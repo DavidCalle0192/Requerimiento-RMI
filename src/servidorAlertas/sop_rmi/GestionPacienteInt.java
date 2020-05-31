@@ -5,7 +5,6 @@
  */
 package servidorAlertas.sop_rmi;
 
-import clienteHabitacion.sop_rmi.*;
 import clienteHabitacion.dto.IndicadorDTO;
 import clienteHabitacion.dto.PacienteDTO;
 import java.rmi.Remote;
