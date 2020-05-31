@@ -10,7 +10,13 @@ import clienteHabitacion.dto.IndicadorDTO;
 import clienteHabitacion.dto.PacienteDTO;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Date;
+import servidorAlertas.dao.HistorialAlertaDAO;
+import servidorAlertas.dto.HistorialDTO;
 
 /**
  *
@@ -50,8 +56,40 @@ public class ClsGestionPaciente extends UnicastRemoteObject implements GestionPa
 
     @Override
     public String enviarIndicadores(IndicadorDTO objIndicador) throws RemoteException {
-        return "";
+        System.out.println("Ejecutando enviarIndicadores...");
+        
+        String respuesta = "";
+        
+        int puntuacion = obtenerPuntuacion(objIndicador);
+        
+        if(puntuacion > 1){
+            HistorialDTO objHistorial = new HistorialDTO(LocalDate.now(), LocalTime.now(), puntuacion);
+            respuesta = "Se genera alerta";
+            HistorialAlertaDAO.agregarHistorial(objHistorial, puntuacion);
+        }else{
+            respuesta = "Continuar monitorización";
+        }
+        
+        System.out.println(respuesta);
+        return respuesta;
     }
+    
+    private int obtenerPuntuacion(IndicadorDTO objIndicadores){
+        int puntuacion = 0;
+        
+        if(objIndicadores != null){
+            if(objIndicadores.getFrecuenciaCardiaca() < 60 
+                    || objIndicadores.getFrecuenciaCardiaca() > 80)puntuacion++;
+
+            if(objIndicadores.getFrecuenciaRespiratoria() < 70 
+                    || objIndicadores.getFrecuenciaRespiratoria() > 90)puntuacion++;
+
+            if(objIndicadores.getTemperatura() < 36.2 
+                    || objIndicadores.getTemperatura() > 37.2)puntuacion++;
+        }
+        return puntuacion;
+    }   
+    
 
     @Override
     public String alertaDomicilio(String mensaje) throws RemoteException {

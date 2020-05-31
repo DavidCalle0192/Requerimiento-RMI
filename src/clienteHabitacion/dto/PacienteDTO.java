@@ -5,11 +5,6 @@ package clienteHabitacion.dto;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
-
-import clienteHabitacion.dto.IndicadorDTO;
-import java.util.ArrayList;
-
 /**
  *
  * @author David Calle
@@ -21,23 +16,13 @@ public class PacienteDTO {
     private String nombres;
     private String apellidos;
     private String Direccion;
-    ArrayList<IndicadorDTO> indicadores;
 
-    public PacienteDTO(int id, String tipo_id, String nombres, String apellidos, String Direccion, ArrayList<IndicadorDTO> indicadores) {
+    public PacienteDTO(int id, String tipo_id, String nombres, String apellidos, String Direccion) {
         this.id = id;
         this.tipo_id = tipo_id;
         this.nombres = nombres;
         this.apellidos = apellidos;
         this.Direccion = Direccion;
-        this.indicadores = new ArrayList<IndicadorDTO>();
-    }
-
-    public ArrayList<IndicadorDTO> getIndicadores() {
-        return indicadores;
-    }
-
-    public void setIndicadores(ArrayList<IndicadorDTO> indicadores) {
-        this.indicadores = indicadores;
     }
 
     public int getId() {
@@ -79,12 +64,4 @@ public class PacienteDTO {
     public void setDireccion(String Direccion) {
         this.Direccion = Direccion;
     }
-    
-    public void agregarIndicador(IndicadorDTO objIndicador){
-    
-           indicadores.add(objIndicador);
-           
-    }
-    
-    
 }
