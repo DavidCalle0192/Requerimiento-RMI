@@ -32,8 +32,8 @@ public class ClienteHabitacion {
     private static GestionPacienteInt objRemoto;
 
     //objeto paciente(inidicador
-    private static PacienteDTO objPAciente = new PacienteDTO(0, " ", " ", " ", " ", null);
-    private static IndicadorDTO objIndicador = new IndicadorDTO(0, 0, 0, objPAciente);
+    private static PacienteDTO objPAciente = new PacienteDTO(0, " ", " ", " ", " ");
+    private static IndicadorDTO objIndicador = new IndicadorDTO(0, 0, 0, objPAciente.getId());
 
     //para validar que el id del paciente no se repita
     private static ArrayList listadoId = new ArrayList(5);
@@ -154,7 +154,7 @@ public class ClienteHabitacion {
                 Random ter = new Random();
                 objIndicador.setTemperatura((float) (36.2 + ter.nextFloat() * (37.2 - 36.2)));
 
-                objPAciente.agregarIndicador(objIndicador);
+                //objPAciente.agregarIndicador(objIndicador);
 
                 System.out.println("Tipo ID: " + objPAciente.getTipo_id());
                 System.out.println("Nombres: " + objPAciente.getNombres());

@@ -6,14 +6,6 @@ package clienteHabitacion.dto;
  * and open the template in the editor.
  */
 
-<<<<<<< HEAD
-import servidorAlertas.dto.*;
-
-=======
-
-import clienteHabitacion.dto.IndicadorDTO;
-import java.util.ArrayList;
->>>>>>> e332a0d5c22673fa0dfda739eadc0a18e29d6fda
 
 /**
  *
@@ -27,7 +19,7 @@ public class PacienteDTO {
     private String apellidos;
     private String Direccion;
 
-    public PacienteDTO(int id, String tipo_id, String nombres, String apellidos, String Direccion, ArrayList<IndicadorDTO> indicadores) {
+    public PacienteDTO(int id, String tipo_id, String nombres, String apellidos, String Direccion) {
         this.id = id;
         this.tipo_id = tipo_id;
         this.nombres = nombres;

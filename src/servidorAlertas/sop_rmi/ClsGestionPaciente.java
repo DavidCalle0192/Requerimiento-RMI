@@ -6,8 +6,8 @@
 
 package servidorAlertas.sop_rmi;
 
-import clienteHabitacion.dto.IndicadorDTO;
-import clienteHabitacion.dto.PacienteDTO;
+import servidorAlertas.dto.IndicadorDTO;
+import servidorAlertas.dto.PacienteDTO;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.time.Instant;
