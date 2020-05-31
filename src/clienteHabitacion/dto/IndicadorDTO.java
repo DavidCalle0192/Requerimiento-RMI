@@ -5,6 +5,8 @@
  */
 package clienteHabitacion.dto;
 
+import servidorAlertas.dto.*;
+import clienteHabitacion.dto.*;
 import java.io.Serializable;
 
 /**
@@ -16,13 +18,13 @@ public class IndicadorDTO implements Serializable {
     private int frecuenciaCardiaca;
     private int frecuenciaRespiratoria;
     private float temperatura;
-    private PacienteDTO objPaciente;
+    private int idPaciente;
 
-    public IndicadorDTO(int frecuenciaCardiaca, int frecuenciaRespiratoria, float temperatura, PacienteDTO objPaciente) {
+    public IndicadorDTO(int frecuenciaCardiaca, int frecuenciaRespiratoria, float temperatura, int idPaciente) {
         this.frecuenciaCardiaca = frecuenciaCardiaca;
         this.frecuenciaRespiratoria = frecuenciaRespiratoria;
         this.temperatura = temperatura;
-        this.objPaciente = objPaciente;
+        this.idPaciente = idPaciente;
     }
 
     public int getFrecuenciaCardiaca() {
@@ -49,14 +51,13 @@ public class IndicadorDTO implements Serializable {
         this.temperatura = temperatura;
     }
 
-    public PacienteDTO getObjPaciente() {
-        return objPaciente;
+    public int getIdPaciente() {
+        return idPaciente;
     }
 
-    public void setObjPaciente(PacienteDTO objPaciente) {
-        this.objPaciente = objPaciente;
+    public void setIdPaciente(int idPaciente) {
+        this.idPaciente = idPaciente;
     }
-    
     
     
 }

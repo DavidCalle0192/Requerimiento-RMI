@@ -5,7 +5,8 @@
  */
 package clienteHabitacion.dto;
 
-import java.util.ArrayList;
+import servidorAlertas.dto.*;
+
 
 /**
  *
@@ -18,7 +19,6 @@ public class PacienteDTO {
     private String nombres;
     private String apellidos;
     private String Direccion;
-    ArrayList<IndicadorDTO> indicadores;
 
     public PacienteDTO(int id, String tipo_id, String nombres, String apellidos, String Direccion) {
         this.id = id;
@@ -26,15 +26,6 @@ public class PacienteDTO {
         this.nombres = nombres;
         this.apellidos = apellidos;
         this.Direccion = Direccion;
-        this.indicadores = new ArrayList<IndicadorDTO>();
-    }
-
-    public ArrayList<IndicadorDTO> getIndicadores() {
-        return indicadores;
-    }
-
-    public void setIndicadores(ArrayList<IndicadorDTO> indicadores) {
-        this.indicadores = indicadores;
     }
 
     public int getId() {
@@ -76,12 +67,4 @@ public class PacienteDTO {
     public void setDireccion(String Direccion) {
         this.Direccion = Direccion;
     }
-    
-    public void agregarIndicador(IndicadorDTO objIndicador){
-    
-           indicadores.add(objIndicador);
-           
-    }
-    
-    
 }
