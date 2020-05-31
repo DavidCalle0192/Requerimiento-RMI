@@ -10,11 +10,9 @@ import servidorAlertas.dto.IndicadorDTO;
 import servidorAlertas.dto.PacienteDTO;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
-import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Date;
 import servidorAlertas.dao.HistorialAlertaDAO;
 import servidorAlertas.dto.HistorialDTO;
 
