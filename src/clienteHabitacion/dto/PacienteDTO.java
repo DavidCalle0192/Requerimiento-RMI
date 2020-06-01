@@ -1,5 +1,7 @@
 package clienteHabitacion.dto;
 
+import java.util.ArrayList;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -18,15 +20,26 @@ public class PacienteDTO {
     private String nombres;
     private String apellidos;
     private String Direccion;
-
-    public PacienteDTO(int id, String tipo_id, String nombres, String apellidos, String Direccion) {
+    private IndicadorDTO listaIndicadores;
+    
+    public PacienteDTO(int id, String tipo_id, String nombres, String apellidos, String Direccion,IndicadorDTO listaIndicadores) {
         this.id = id;
         this.tipo_id = tipo_id;
         this.nombres = nombres;
         this.apellidos = apellidos;
         this.Direccion = Direccion;
+        this.listaIndicadores=null;
     }
 
+    public IndicadorDTO getListaIndicadores() {
+        return listaIndicadores;
+    }
+
+    public void setListaIndicadores(IndicadorDTO listaIndicadores) {
+        this.listaIndicadores = listaIndicadores;
+    }
+
+    
     public int getId() {
         return id;
     }

@@ -32,18 +32,14 @@ public class ClienteHabitacion {
     //objeto remoto
     private static GestionPacienteInt objRemoto;
 
-    //objeto paciente(inidicador
-    private static PacienteDTO objPAciente = new PacienteDTO(0, " ", " ", " ", " ");
-    private static IndicadorDTO objIndicador = new IndicadorDTO(0, 0, 0, objPAciente.getId());
-
     //para validar que el id del paciente no se repita
     private static ArrayList listadoId = new ArrayList(5);
-    private static ArrayList<PacienteDTO> listaPaciente = new ArrayList<PacienteDTO>();
+   //Array de objetos
+    
     private static int cont = 0;
 
     public static void main(String[] args) throws RemoteException {
         // TODO code application logic here
-
         Scanner reader = new Scanner(System.in);
         int numPuertoRMIRegistry = 0;
         String direccionIpRMIRegistry = "";
@@ -54,14 +50,15 @@ public class ClienteHabitacion {
         System.out.println("Cual es el número de puerto por el cual escucha el rmiregistry ");
         numPuertoRMIRegistry = reader.nextInt();
 
-        objRemoto = (GestionPacienteInt) UtilidadesRegistroC.obtenerObjRemoto(direccionIpRMIRegistry, numPuertoRMIRegistry, "ObjetoRemotoAsintomatico");
-        
-        //UtilidadesRegistroS.RegistrarObjetoRemoto(objRemoto, direccionIpRMIRegistry, numPuertoRMIRegistry, "ObjetoRemotoAsintomatico");            
-           
+        //objeto remoto incorrecto para bruebas  
+        objRemoto = (GestionPacienteInt) UtilidadesRegistroC.obtenerObjRemoto(direccionIpRMIRegistry, numPuertoRMIRegistry, "++ObjetoRemotoAsintomatico");
+
         MenuPrincipal();
     }
 
     private static void MenuPrincipal() throws RemoteException {
+        
+        ArrayList<PacienteDTO> listaPaciente = new ArrayList<PacienteDTO>();
         int aux = 0;//variable para validar la opción 2
         int opcion = 0;
         do {
@@ -75,6 +72,7 @@ public class ClienteHabitacion {
             switch (opcion) {
                 case 1:
                     aux = 1;
+                    
                     System.out.println("Validando Existencia de un paciente con el mismo ID");
                     System.out.println("Ingrese el id: ");
                     Scanner leer = new Scanner(System.in);
@@ -85,14 +83,15 @@ public class ClienteHabitacion {
                         listadoId.add(dni);
                         System.out.println("No existen pacientes con ese ID, se procedera a la creación del nuevo registro con este ID.");
                         System.out.println();
-                        objPAciente.setId(dni);
-                        Opcion1();
+                        Opcion1(dni,listaPaciente);
+                        cont++;
+                        
                     }
 
                     break;
                 case 2:
                     if (aux == 1) {
-                        Opcion2();
+                        Opcion2(listaPaciente);
                     } else {
                         System.out.println("No existen pacientes registrados.");
                     }
@@ -108,9 +107,13 @@ public class ClienteHabitacion {
         } while (opcion != 3);
     }
 
-    private static void Opcion1() {
-        cont++;
-        if (cont != 5) {
+    private static void Opcion1(int id, ArrayList<PacienteDTO> listaPaciente) {
+
+        PacienteDTO objPAciente = new PacienteDTO(0, " ", " ", " ", " ",null);
+        
+        
+                   
+        if (cont <= 5) {
 
             System.out.println("==Registro del Paciente==");
 
@@ -121,7 +124,7 @@ public class ClienteHabitacion {
             System.out.println("Ingrese el tipo de id ");
             String tipo_id = UtilidadesConsola.leerCadena();
             objPAciente.setTipo_id(tipo_id);
-
+            
             System.out.println("Ingrese el nombre del paciente ");
             String nombres = UtilidadesConsola.leerCadena();
             objPAciente.setNombres(nombres);
@@ -134,18 +137,23 @@ public class ClienteHabitacion {
             String direccion = UtilidadesConsola.leerCadena();
             objPAciente.setDireccion(direccion);
             System.out.println();
-            // se alamacena el paciente en una lista
-            //listaPaciente.add(objPAciente);
-
+            
+            listaPaciente.add(objPAciente);
+            //System.out.println(cont);
             System.out.println("Paciente registrado exitosamente.");
         } else {
             System.out.println("A excedido el limite de pacientes registrados");
         }
+        
 
+        // se alamacena el paciente en una lista
     }
 
-    private static void Opcion2() {
+    private static void Opcion2(ArrayList<PacienteDTO> listaPaciente) {
 
+        IndicadorDTO objIndicador = new IndicadorDTO(0, 0, 0, 0);
+        System.out.println("desde la opcion 2");
+        System.out.println(listaPaciente.size());
         Timer timer = new Timer();
         TimerTask task = new TimerTask() {
 
@@ -156,21 +164,24 @@ public class ClienteHabitacion {
 
                     Random fcr = new Random();
                     objIndicador.setFrecuenciaCardiaca((int) (60 + fcr.nextFloat() * (80 - 60)));
-
+                    listaPaciente.get(i).setListaIndicadores(objIndicador);
+                    
                     Random frr = new Random();
                     objIndicador.setFrecuenciaRespiratoria((int) (70 + frr.nextFloat() * (90 - 70)));
-
+                    listaPaciente.get(i).setListaIndicadores(objIndicador);
+                    
                     Random ter = new Random();
                     objIndicador.setTemperatura((float) (36.2 + ter.nextFloat() * (37.2 - 36.2)));
-
+                    listaPaciente.get(i).setListaIndicadores(objIndicador);
+                    
                     //objPAciente.agregarIndicador(objIndicador);
                     System.out.println("Tipo ID: " + listaPaciente.get(i).getTipo_id());
                     System.out.println("Nombres: " + listaPaciente.get(i).getNombres());
                     System.out.println("Apellidos: " + listaPaciente.get(i).getApellidos());
                     System.out.println("Dirección: " + listaPaciente.get(i).getDireccion());
-                    System.out.println("Frecuencia cardiaca: " + objIndicador.getFrecuenciaCardiaca() + " latidos por minuto");
-                    System.out.println("Frecuencia respiratoria: " + objIndicador.getFrecuenciaRespiratoria() + " ventilaciones por minuto");
-                    System.out.println("Temperatura: " + objIndicador.getTemperatura() + " grados centigrados");
+                    System.out.println("Frecuencia cardiaca: " + listaPaciente.get(i).getListaIndicadores().getFrecuenciaCardiaca() + " latidos por minuto");
+                    System.out.println("Frecuencia respiratoria: " + listaPaciente.get(i).getListaIndicadores().getFrecuenciaRespiratoria() + " ventilaciones por minuto");
+                    System.out.println("Temperatura: " + listaPaciente.get(i).getListaIndicadores().getTemperatura() + " grados centigrados");
 
                 }
 
