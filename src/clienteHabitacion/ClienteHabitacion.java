@@ -51,7 +51,7 @@ public class ClienteHabitacion {
         numPuertoRMIRegistry = reader.nextInt();
 
         //objeto remoto incorrecto para bruebas  
-        objRemoto = (GestionPacienteInt) UtilidadesRegistroC.obtenerObjRemoto(direccionIpRMIRegistry, numPuertoRMIRegistry, "++ObjetoRemotoAsintomatico");
+        objRemoto = (GestionPacienteInt) UtilidadesRegistroC.obtenerObjRemoto(direccionIpRMIRegistry, numPuertoRMIRegistry, "ObjetoRemotoAsintomatico");
 
         MenuPrincipal();
     }

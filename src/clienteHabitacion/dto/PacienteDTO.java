@@ -20,26 +20,15 @@ public class PacienteDTO {
     private String nombres;
     private String apellidos;
     private String Direccion;
-    //private IndicadorDTO indicadores;
-    
-    public PacienteDTO(int id, String tipo_id, String nombres, String apellidos, String Direccion){//,IndicadorDTO listaIndicadores) {
+
+    public PacienteDTO(int id, String tipo_id, String nombres, String apellidos, String Direccion) {
         this.id = id;
         this.tipo_id = tipo_id;
         this.nombres = nombres;
         this.apellidos = apellidos;
         this.Direccion = Direccion;
-        //this.indicadores=null;
-    }
-/*
-    public IndicadorDTO getListaIndicadores() {
-        return indicadores;
     }
 
-    public void setListaIndicadores(IndicadorDTO listaIndicadores) {
-        this.indicadores = listaIndicadores;
-    }
-*/
-    
     public int getId() {
         return id;
     }
