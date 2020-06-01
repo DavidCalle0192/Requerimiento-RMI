@@ -109,7 +109,7 @@ public class ClienteHabitacion {
 
     private static void Opcion1(int id, ArrayList<PacienteDTO> listaPaciente) {
 
-        PacienteDTO objPAciente = new PacienteDTO(0, " ", " ", " ", " ",null);
+        PacienteDTO objPAciente = new PacienteDTO(id, " ", " ", " ", " ");
         
         
                    
@@ -164,25 +164,29 @@ public class ClienteHabitacion {
 
                     Random fcr = new Random();
                     objIndicador.setFrecuenciaCardiaca((int) (60 + fcr.nextFloat() * (80 - 60)));
-                    listaPaciente.get(i).setListaIndicadores(objIndicador);
+                    //listaPaciente.get(i).setListaIndicadores(objIndicador);
                     
                     Random frr = new Random();
                     objIndicador.setFrecuenciaRespiratoria((int) (70 + frr.nextFloat() * (90 - 70)));
-                    listaPaciente.get(i).setListaIndicadores(objIndicador);
+                    //listaPaciente.get(i).setListaIndicadores(objIndicador);
                     
                     Random ter = new Random();
                     objIndicador.setTemperatura((float) (36.2 + ter.nextFloat() * (37.2 - 36.2)));
-                    listaPaciente.get(i).setListaIndicadores(objIndicador);
+                    //listaPaciente.get(i).setListaIndicadores(objIndicador);
                     
                     //objPAciente.agregarIndicador(objIndicador);
-                    System.out.println("Tipo ID: " + listaPaciente.get(i).getTipo_id());
-                    System.out.println("Nombres: " + listaPaciente.get(i).getNombres());
-                    System.out.println("Apellidos: " + listaPaciente.get(i).getApellidos());
-                    System.out.println("Dirección: " + listaPaciente.get(i).getDireccion());
-                    System.out.println("Frecuencia cardiaca: " + listaPaciente.get(i).getListaIndicadores().getFrecuenciaCardiaca() + " latidos por minuto");
-                    System.out.println("Frecuencia respiratoria: " + listaPaciente.get(i).getListaIndicadores().getFrecuenciaRespiratoria() + " ventilaciones por minuto");
-                    System.out.println("Temperatura: " + listaPaciente.get(i).getListaIndicadores().getTemperatura() + " grados centigrados");
-
+                    System.out.println("ID del paciente: " + listaPaciente.get(i).getId());
+                    
+                    //System.out.println("Tipo ID: " +  listaPaciente.get(i).getTipo_id());
+                    //System.out.println("Nombres: " + listaPaciente.get(i).getNombres());
+                    //System.out.println("Apellidos: " + listaPaciente.get(i).getApellidos());
+                    //System.out.println("Dirección: " + listaPaciente.get(i).getDireccion());
+                    //System.out.println("Frecuencia cardiaca: " + listaPaciente.get(i).getListaIndicadores().getFrecuenciaCardiaca() + " latidos por minuto");
+                    System.out.println("Frecuencia cardiaca: " + objIndicador.getFrecuenciaCardiaca() + " latidos por minuto");
+                    //System.out.println("Frecuencia respiratoria: " + listaPaciente.get(i).getListaIndicadores().getFrecuenciaRespiratoria() + " ventilaciones por minuto");
+                    System.out.println("Frecuencia cardiaca: " + objIndicador.getFrecuenciaRespiratoria() + " latidos por minuto");
+                    //System.out.println("Temperatura: " + listaPaciente.get(i).getListaIndicadores().getTemperatura() + " grados centigrados");
+                    System.out.println("Frecuencia cardiaca: " + objIndicador.getTemperatura() + " latidos por minuto");
                 }
 
             }
