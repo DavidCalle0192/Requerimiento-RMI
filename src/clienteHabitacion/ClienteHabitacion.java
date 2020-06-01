@@ -17,6 +17,7 @@ import java.util.Scanner;
 
 import java.util.Timer;
 import java.util.TimerTask;
+import servidorAlertas.utilidades.UtilidadesRegistroS;
 
 /**
  *
@@ -37,6 +38,7 @@ public class ClienteHabitacion {
 
     //para validar que el id del paciente no se repita
     private static ArrayList listadoId = new ArrayList(5);
+    private static ArrayList<PacienteDTO> listaPaciente = new ArrayList<PacienteDTO>();
     private static int cont = 0;
 
     public static void main(String[] args) throws RemoteException {
@@ -50,9 +52,12 @@ public class ClienteHabitacion {
         direccionIpRMIRegistry = reader.nextLine();
 
         System.out.println("Cual es el número de puerto por el cual escucha el rmiregistry ");
-        numPuertoRMIRegistry = reader.nextInt();;
+        numPuertoRMIRegistry = reader.nextInt();
 
-        objRemoto = (GestionPacienteInt) UtilidadesRegistroC.obtenerObjRemoto(direccionIpRMIRegistry, numPuertoRMIRegistry, "ObjetoRemotoUsuarios");
+        objRemoto = (GestionPacienteInt) UtilidadesRegistroC.obtenerObjRemoto(direccionIpRMIRegistry, numPuertoRMIRegistry, "ObjetoRemotoAsintomatico");
+        
+        //UtilidadesRegistroS.RegistrarObjetoRemoto(objRemoto, direccionIpRMIRegistry, numPuertoRMIRegistry, "ObjetoRemotoAsintomatico");            
+           
         MenuPrincipal();
     }
 
@@ -129,6 +134,8 @@ public class ClienteHabitacion {
             String direccion = UtilidadesConsola.leerCadena();
             objPAciente.setDireccion(direccion);
             System.out.println();
+            // se alamacena el paciente en una lista
+            //listaPaciente.add(objPAciente);
 
             System.out.println("Paciente registrado exitosamente.");
         } else {
@@ -136,7 +143,6 @@ public class ClienteHabitacion {
         }
 
     }
-    
 
     private static void Opcion2() {
 
@@ -145,24 +151,28 @@ public class ClienteHabitacion {
 
             @Override
             public void run() {
-                Random fcr = new Random();
-                objIndicador.setFrecuenciaCardiaca((int) (60 + fcr.nextFloat() * (80 - 60)));
 
-                Random frr = new Random();
-                objIndicador.setFrecuenciaRespiratoria((int) (70 + frr.nextFloat() * (90 - 70)));
+                for (int i = 0; i < listaPaciente.size(); i++) {
 
-                Random ter = new Random();
-                objIndicador.setTemperatura((float) (36.2 + ter.nextFloat() * (37.2 - 36.2)));
+                    Random fcr = new Random();
+                    objIndicador.setFrecuenciaCardiaca((int) (60 + fcr.nextFloat() * (80 - 60)));
 
-                //objPAciente.agregarIndicador(objIndicador);
+                    Random frr = new Random();
+                    objIndicador.setFrecuenciaRespiratoria((int) (70 + frr.nextFloat() * (90 - 70)));
 
-                System.out.println("Tipo ID: " + objPAciente.getTipo_id());
-                System.out.println("Nombres: " + objPAciente.getNombres());
-                System.out.println("Apellidos: " + objPAciente.getApellidos());
-                System.out.println("Dirección: " + objPAciente.getDireccion());
-                System.out.println("Frecuencia cardiaca: " + objIndicador.getFrecuenciaCardiaca() + " latidos por minuto");
-                System.out.println("Frecuencia respiratoria: " + objIndicador.getFrecuenciaRespiratoria() + " ventilaciones por minuto");
-                System.out.println("Temperatura: " + objIndicador.getTemperatura() + " grados centigrados");
+                    Random ter = new Random();
+                    objIndicador.setTemperatura((float) (36.2 + ter.nextFloat() * (37.2 - 36.2)));
+
+                    //objPAciente.agregarIndicador(objIndicador);
+                    System.out.println("Tipo ID: " + listaPaciente.get(i).getTipo_id());
+                    System.out.println("Nombres: " + listaPaciente.get(i).getNombres());
+                    System.out.println("Apellidos: " + listaPaciente.get(i).getApellidos());
+                    System.out.println("Dirección: " + listaPaciente.get(i).getDireccion());
+                    System.out.println("Frecuencia cardiaca: " + objIndicador.getFrecuenciaCardiaca() + " latidos por minuto");
+                    System.out.println("Frecuencia respiratoria: " + objIndicador.getFrecuenciaRespiratoria() + " ventilaciones por minuto");
+                    System.out.println("Temperatura: " + objIndicador.getTemperatura() + " grados centigrados");
+
+                }
 
             }
 
