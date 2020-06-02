@@ -65,7 +65,4 @@ public class PacienteDTO {
     public void setDireccion(String Direccion) {
         this.Direccion = Direccion;
     }
-    
-    
-    //Hola soy un cambio desde netbeans
 }
