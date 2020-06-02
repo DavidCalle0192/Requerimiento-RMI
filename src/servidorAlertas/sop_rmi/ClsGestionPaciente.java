@@ -23,7 +23,7 @@ import servidorAlertas.dto.HistorialDTO;
 public class ClsGestionPaciente extends UnicastRemoteObject implements GestionPacienteInt{
 
     private ArrayList<PacienteDTO> pacientes;
-    private int MAX_PACIENTES;
+    private int MAX_PACIENTES = 1;
 
     public ClsGestionPaciente() throws RemoteException {
         super();
@@ -38,6 +38,12 @@ public class ClsGestionPaciente extends UnicastRemoteObject implements GestionPa
         if(!pacienteRegistrado(objPaciente)){
             if(pacientes.size()<MAX_PACIENTES){
                 if(pacientes.add(objPaciente)){
+                    System.out.println("Paciente nuevo:");
+                    System.out.println("Nombre:"+objPaciente.getNombres()+" "+objPaciente.getApellidos());
+                    System.out.println("Identificacion: "+objPaciente.getTipo_id()+" "+objPaciente.getId());
+                    System.out.println("Direccion:"+objPaciente.getDireccion());
+                    System.out.println("Creando historial...");
+                    crearHistorialPaciente(objPaciente.getId());
                     respuesta = "Se registro el paciente";
                 }else{
                     respuesta = "Error al registrar paciente";
@@ -50,6 +56,17 @@ public class ClsGestionPaciente extends UnicastRemoteObject implements GestionPa
         }
         System.out.println(respuesta);
         return respuesta;
+    }
+    
+    private void crearHistorialPaciente(int idPaciente){
+        if(HistorialAlertaDAO.existeHistorial(idPaciente)){    
+            if(HistorialAlertaDAO.crearHistorial(idPaciente))
+                System.out.println("Se creo un nuevo historial de alertas para el paciente");
+            else
+                System.out.println("Hubo un error al crear historial de alertas para el paciente");
+        }else{
+            System.out.println("El paciente ya tiene un historial");
+        }
     }
 
     @Override
@@ -87,12 +104,6 @@ public class ClsGestionPaciente extends UnicastRemoteObject implements GestionPa
         }
         return puntuacion;
     }   
-    
-
-    @Override
-    public String alertaDomicilio(String mensaje) throws RemoteException {
-        return "";
-    }
 
     @Override
     public boolean establecerMaxPacientes(int num) throws RemoteException {

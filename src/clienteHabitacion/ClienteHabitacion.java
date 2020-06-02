@@ -5,11 +5,11 @@ package clienteHabitacion;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-import clienteHabitacion.dto.IndicadorDTO;
-import clienteHabitacion.dto.PacienteDTO;
+import servidorAlertas.dto.IndicadorDTO;
+import servidorAlertas.dto.PacienteDTO;
 import clienteHabitacion.utilidades.UtilidadesRegistroC;
 import clienteHabitacion.utilidades.UtilidadesConsola;
-import clienteHabitacion.sop_rmi.GestionPacienteInt;
+import servidorAlertas.sop_rmi.GestionPacienteInt;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Random;
@@ -17,6 +17,8 @@ import java.util.Scanner;
 
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import servidorAlertas.utilidades.UtilidadesRegistroS;
 
 /**
@@ -106,7 +108,7 @@ public class ClienteHabitacion {
         } while (opcion != 3);
     }
 
-    private static void Opcion1(int id, ArrayList<PacienteDTO> listaPaciente) {
+    private static void Opcion1(int id, ArrayList<PacienteDTO> listaPaciente) throws RemoteException {
 
         PacienteDTO objPAciente = new PacienteDTO(id, " ", " ", " ", " ");
         
@@ -138,6 +140,7 @@ public class ClienteHabitacion {
             System.out.println();
             
             listaPaciente.add(objPAciente);
+            objRemoto.registrarPaciente(objPAciente);
             //System.out.println(cont);
             System.out.println("Paciente registrado exitosamente.");
         } else {
@@ -150,7 +153,7 @@ public class ClienteHabitacion {
 
     private static void Opcion2(ArrayList<PacienteDTO> listaPaciente) {
 
-        IndicadorDTO objIndicador = new IndicadorDTO(0, 0, 0, 0);
+        IndicadorDTO objIndicador = new IndicadorDTO(0, 0, 0, listaPaciente.get(listaPaciente.size()-1).getId());
         System.out.println("desde la opcion 2");
         System.out.println(listaPaciente.size());
         Timer timer = new Timer();
@@ -186,6 +189,12 @@ public class ClienteHabitacion {
                     System.out.println("Frecuencia cardiaca: " + objIndicador.getFrecuenciaRespiratoria() + " latidos por minuto");
                     //System.out.println("Temperatura: " + listaPaciente.get(i).getListaIndicadores().getTemperatura() + " grados centigrados");
                     System.out.println("Frecuencia cardiaca: " + objIndicador.getTemperatura() + " latidos por minuto");
+                    
+                    try {
+                        objRemoto.enviarIndicadores(objIndicador);
+                    } catch (RemoteException ex) {
+                        Logger.getLogger(ClienteHabitacion.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
 
             }

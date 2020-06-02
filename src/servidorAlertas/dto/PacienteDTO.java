@@ -5,12 +5,14 @@
  */
 package servidorAlertas.dto;
 
+import java.io.Serializable;
+
 
 /**
  *
  * @author usuario
  */
-public class PacienteDTO {
+public class PacienteDTO implements Serializable{
     
     private int id;
     private String tipo_id;

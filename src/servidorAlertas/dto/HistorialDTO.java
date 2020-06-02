@@ -6,6 +6,7 @@
 
 package servidorAlertas.dto;
 
+import java.io.Serializable;
 import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -15,7 +16,7 @@ import java.util.Date;
  *
  * @author JhonMZ
  */
-public class HistorialDTO {
+public class HistorialDTO implements Serializable{
     LocalDate fecha;
     LocalTime Hora;
     int puntuacion;
