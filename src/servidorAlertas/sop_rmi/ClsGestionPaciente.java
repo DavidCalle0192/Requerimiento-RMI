@@ -6,15 +6,16 @@
 
 package servidorAlertas.sop_rmi;
 
-import servidorAlertas.dto.IndicadorDTO;
-import servidorAlertas.dto.PacienteDTO;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Stack;
 import servidorAlertas.dao.HistorialAlertaDAO;
 import servidorAlertas.dto.HistorialDTO;
+import servidorAlertas.dto.IndicadorDTO;
+import servidorAlertas.dto.PacienteDTO;
 
 /**
  *
@@ -52,14 +53,14 @@ public class ClsGestionPaciente extends UnicastRemoteObject implements GestionPa
                 respuesta = "No se pueden registrar mas pacientes";
             }
         }else{
-            respuesta = "El paciente ya estaba registrado";
+            respuesta = "El paciente con id "+objPaciente.getId()+" ya se encuentra registrado";
         }
         System.out.println(respuesta);
         return respuesta;
     }
     
     private void crearHistorialPaciente(int idPaciente){
-        if(HistorialAlertaDAO.existeHistorial(idPaciente)){    
+        if(!HistorialAlertaDAO.existeHistorial(idPaciente)){    
             if(HistorialAlertaDAO.crearHistorial(idPaciente))
                 System.out.println("Se creo un nuevo historial de alertas para el paciente");
             else
@@ -80,12 +81,24 @@ public class ClsGestionPaciente extends UnicastRemoteObject implements GestionPa
         if(puntuacion > 1){
             HistorialDTO objHistorial = new HistorialDTO(LocalDate.now(), LocalTime.now(), puntuacion);
             respuesta = "Se genera alerta";
-            HistorialAlertaDAO.agregarHistorial(objHistorial, puntuacion);
+            
+            //TODO:Crear callback
+            
+            //Si el paciente no tiene un historial se procede a crearlo
+            if(!HistorialAlertaDAO.existeHistorial(objIndicador.getIdPaciente()))HistorialAlertaDAO.crearHistorial(objIndicador.getIdPaciente());
+            
+            System.out.println("Enviando y almacenando alerta del paciente "+objIndicador.getIdPaciente()+"...");
+            Stack<HistorialDTO> historial = HistorialAlertaDAO.obtenerUlt5Reg(objIndicador.getIdPaciente());
+            HistorialAlertaDAO.agregarHistorial(objHistorial, objIndicador.getIdPaciente());
+            while(!historial.empty()){
+                System.out.println(historial.pop().getHora().toString());
+            }
+            System.out.println("Alerta almacenada");
         }else{
-            respuesta = "Continuar monitorización";
+            System.out.println("Continuar monitorización del paciente "+objIndicador.getIdPaciente());
+            respuesta = "Continuar monitorización ";
         }
         
-        System.out.println(respuesta);
         return respuesta;
     }
     

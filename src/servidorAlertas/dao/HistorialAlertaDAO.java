@@ -6,7 +6,11 @@
 
 package servidorAlertas.dao;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.ListIterator;
+import java.util.Stack;
 import servidorAlertas.dto.HistorialDTO;
 
 /**
@@ -48,5 +52,26 @@ public class HistorialAlertaDAO {
         //Fecha;Hota;Puntuacion
         String linea = objHistorial.getFecha().toString()+";"+objHistorial.getHora().toString()+";"+objHistorial.getPuntuacion();
         return ArchivoDAO.agregarLinea("historialDeAlertas"+idPaciente+".txt", linea);
+    }
+    
+    public static Stack<HistorialDTO> obtenerUlt5Reg(int idPaciente){
+        Stack<HistorialDTO> historial = new Stack<HistorialDTO>();
+        int cont = 0;
+        ArrayList<String> lineas = ArchivoDAO.obtenerLineas("historialDeAlertas"+idPaciente+".txt");
+        if(lineas != null){
+            ListIterator iterator = lineas.listIterator(lineas.size());   
+            while(iterator.hasPrevious()){
+                cont++;
+                String linea = iterator.previous().toString();
+                String tokens[] = linea.split(";");
+                HistorialDTO objHistorialTemp = new HistorialDTO();
+                objHistorialTemp.setFecha(LocalDate.parse(tokens[0]));
+                objHistorialTemp.setHora(LocalTime.parse(tokens[1]));
+                objHistorialTemp.setPuntuacion(Integer.parseInt(tokens[2]));
+                historial.push(objHistorialTemp);
+                if(cont>=5)break;
+            }
+        }
+        return historial;
     }
 }

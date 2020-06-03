@@ -165,15 +165,15 @@ public class ClienteHabitacion {
                 for (int i = 0; i < listaPaciente.size(); i++) {
 
                     Random fcr = new Random();
-                    objIndicador.setFrecuenciaCardiaca((int) (60 + fcr.nextFloat() * (80 - 60)));
+                    objIndicador.setFrecuenciaCardiaca((int) (50 + fcr.nextFloat() * (90 - 50)));
                     //listaPaciente.get(i).setListaIndicadores(objIndicador);
                     
                     Random frr = new Random();
-                    objIndicador.setFrecuenciaRespiratoria((int) (70 + frr.nextFloat() * (90 - 70)));
+                    objIndicador.setFrecuenciaRespiratoria((int) (60 + frr.nextFloat() * (100 - 60)));
                     //listaPaciente.get(i).setListaIndicadores(objIndicador);
                     
                     Random ter = new Random();
-                    objIndicador.setTemperatura((float) (36.2 + ter.nextFloat() * (37.2 - 36.2)));
+                    objIndicador.setTemperatura((float) (35.2 + ter.nextFloat() * (38.2 - 35.2)));
                     //listaPaciente.get(i).setListaIndicadores(objIndicador);
                     
                     //objPAciente.agregarIndicador(objIndicador);

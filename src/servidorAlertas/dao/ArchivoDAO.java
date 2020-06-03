@@ -6,9 +6,13 @@
 
 package servidorAlertas.dao;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -39,7 +43,7 @@ public class ArchivoDAO {
     
     public static boolean existeArchivo(String pathName){
         File file = new File(pathName);
-        
+        //System.out.println(file.getAbsolutePath());
         return file.exists();
     }
     
@@ -51,7 +55,7 @@ public class ArchivoDAO {
         File file = new File(pathName);
         try {
             FileWriter fw = new FileWriter(file,true);
-            fw.write(linea);
+            fw.write(linea+"\n");
             fw.close();
             res = true;
         } catch (IOException ex) {
@@ -60,5 +64,25 @@ public class ArchivoDAO {
         }
         
         return res;
+    }
+    
+    public static ArrayList<String> obtenerLineas(String pathName){
+        ArrayList<String> lineas = new ArrayList<>();
+        File file = new File(pathName);
+        
+        BufferedReader br;
+        try {
+            br = new BufferedReader(new FileReader(file));
+            String line;
+            while ((line = br.readLine()) != null) {
+               lineas.add(line);
+            }
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(ArchivoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(ArchivoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return lineas;
     }
 }

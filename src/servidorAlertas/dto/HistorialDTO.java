@@ -27,6 +27,12 @@ public class HistorialDTO implements Serializable{
         this.puntuacion = puntuacion;
     }
 
+    public HistorialDTO() {
+        this.fecha = LocalDate.now();
+        this.Hora = LocalTime.now();
+        this.puntuacion = 0;
+    }
+
     public LocalDate getFecha() {
         return fecha;
     }
