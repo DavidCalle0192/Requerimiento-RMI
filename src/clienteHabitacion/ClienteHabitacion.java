@@ -42,6 +42,9 @@ public class ClienteHabitacion {
 
     public static void main(String[] args) throws RemoteException {
         // TODO code application logic here
+        
+        Interfaz.main(args); //Llamado a la interfaz
+        
         Scanner reader = new Scanner(System.in);
         int numPuertoRMIRegistry = 0;
         String direccionIpRMIRegistry = "";
