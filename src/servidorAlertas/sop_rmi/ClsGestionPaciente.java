@@ -102,7 +102,7 @@ public class ClsGestionPaciente extends UnicastRemoteObject implements GestionPa
 
             PacienteDTO objPaciente = buscarPaciente(objIndicador.getIdPaciente());
             
-            AlertaDTO objAlerta = new AlertaDTO(historial, objIndicador, objPaciente, puntuacion);
+            AlertaDTO objAlerta = new AlertaDTO(historial, objIndicador, objPaciente,LocalDate.now(),LocalTime.now(),puntuacion);
             
             objRefRemNotificacion.enviarAlerta(objAlerta);
             

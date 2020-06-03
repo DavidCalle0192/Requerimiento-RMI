@@ -13,6 +13,7 @@ import servidorAlertas.dto.HistorialDTO;
 import servidorAlertas.dto.IndicadorDTO;
 import servidorAlertas.dto.PacienteDTO;
 import servidorNotificaciones.dto.AlertaDTO;
+import servidorNotificaciones.vistas.VistaNotificaciones;
 
 /**
  *
@@ -26,7 +27,11 @@ public class ClsNotificaciones extends UnicastRemoteObject implements Notificaci
     
     @Override
     public void enviarAlerta(AlertaDTO objAlerta) throws RemoteException {
-        PacienteDTO objPaciente = objAlerta.getPaciente();
+        System.out.println("Ejecutando enviarAlerta...");
+        VistaNotificaciones objVista = new VistaNotificaciones();
+        objVista.editarInfo(objAlerta);
+        objVista.setVisible(true);
+        /*PacienteDTO objPaciente = objAlerta.getPaciente();
         
         System.out.println("Nombre:"+objPaciente.getNombres()+" "+objPaciente.getApellidos());
         System.out.println("Identificacion: "+objPaciente.getTipo_id()+" "+objPaciente.getId());
@@ -42,7 +47,7 @@ public class ClsNotificaciones extends UnicastRemoteObject implements Notificaci
         System.out.println("***Historial***");
         while(!historial.empty()){
             System.out.println(historial.pop().getHora().toString());
-        }
+        }*/
     }
     
 }

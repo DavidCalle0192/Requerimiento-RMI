@@ -7,6 +7,8 @@
 package servidorNotificaciones.dto;
 
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Stack;
 import servidorAlertas.dto.HistorialDTO;
 import servidorAlertas.dto.IndicadorDTO;
@@ -20,12 +22,16 @@ public class AlertaDTO implements Serializable{
     private Stack<HistorialDTO> historial;
     private IndicadorDTO indicadores;
     private PacienteDTO paciente;
+    private LocalDate fecha;
+    private LocalTime hora;
     private int puntuacion;
 
-    public AlertaDTO(Stack<HistorialDTO> historial, IndicadorDTO indicadores, PacienteDTO paciente, int puntuacion) {
+    public AlertaDTO(Stack<HistorialDTO> historial, IndicadorDTO indicadores, PacienteDTO paciente, LocalDate fecha, LocalTime hora, int puntuacion) {
         this.historial = historial;
         this.indicadores = indicadores;
         this.paciente = paciente;
+        this.fecha = fecha;
+        this.hora = hora;
         this.puntuacion = puntuacion;
     }
 
@@ -52,6 +58,24 @@ public class AlertaDTO implements Serializable{
     public void setPaciente(PacienteDTO paciente) {
         this.paciente = paciente;
     }
+
+    public LocalDate getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(LocalDate fecha) {
+        this.fecha = fecha;
+    }
+
+    public LocalTime getHora() {
+        return hora;
+    }
+
+    public void setHora(LocalTime hora) {
+        this.hora = hora;
+    }
+    
+    
 
     public int getPuntuacion() {
         return puntuacion;
