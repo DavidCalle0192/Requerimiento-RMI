@@ -7,7 +7,7 @@
 package servidorNotificaciones.dto;
 
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.Stack;
 import servidorAlertas.dto.HistorialDTO;
 import servidorAlertas.dto.IndicadorDTO;
 import servidorAlertas.dto.PacienteDTO;
@@ -17,21 +17,23 @@ import servidorAlertas.dto.PacienteDTO;
  * @author JhonMZ
  */
 public class AlertaDTO implements Serializable{
-    private ArrayList<HistorialDTO> historial;
+    private Stack<HistorialDTO> historial;
     private IndicadorDTO indicadores;
     private PacienteDTO paciente;
+    private int puntuacion;
 
-    public AlertaDTO(ArrayList<HistorialDTO> historial, IndicadorDTO indicadores, PacienteDTO paciente) {
+    public AlertaDTO(Stack<HistorialDTO> historial, IndicadorDTO indicadores, PacienteDTO paciente, int puntuacion) {
         this.historial = historial;
         this.indicadores = indicadores;
         this.paciente = paciente;
+        this.puntuacion = puntuacion;
     }
 
-    public ArrayList<HistorialDTO> getHistorial() {
+    public Stack<HistorialDTO> getHistorial() {
         return historial;
     }
 
-    public void setHistorial(ArrayList<HistorialDTO> historial) {
+    public void setHistorial(Stack<HistorialDTO> historial) {
         this.historial = historial;
     }
 
@@ -49,6 +51,14 @@ public class AlertaDTO implements Serializable{
 
     public void setPaciente(PacienteDTO paciente) {
         this.paciente = paciente;
+    }
+
+    public int getPuntuacion() {
+        return puntuacion;
+    }
+
+    public void setPuntuacion(int puntuacion) {
+        this.puntuacion = puntuacion;
     }
     
     

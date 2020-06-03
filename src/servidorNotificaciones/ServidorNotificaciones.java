@@ -4,18 +4,18 @@
  * and open the template in the editor.
  */
 
-package servidorAlertas;
+package servidorNotificaciones;
 
 import java.rmi.RemoteException;
-import servidorAlertas.sop_rmi.ClsGestionPaciente;
-import servidorAlertas.utilidades.UtilidadesConsola;
-import servidorAlertas.utilidades.UtilidadesRegistroS;
+import servidorNotificaciones.utilidades.UtilidadesConsola;
+import servidorNotificaciones.utilidades.UtilidadesRegistroS;
+import servidorNotificaciones.sop_rmi.ClsNotificaciones;
 
 /**
  *
  * @author JhonMZ
  */
-public class ServidorAlertas {
+public class ServidorNotificaciones {
     public static void main(String args[]) throws RemoteException
     {
         int numPuertoRMIRegistry = 0;
@@ -38,12 +38,12 @@ public class ServidorAlertas {
                 System.out.println("Digite un puerto valido");
             }
         }while(num == null);
-        ClsGestionPaciente objRemoto = new ClsGestionPaciente();
-        objRemoto.consultarReferenciaRemotaDeNotificacion(direccionIpRMIRegistry, numPuertoRMIRegistry);
+        ClsNotificaciones objRemoto = new ClsNotificaciones();
+        
         try
         {
            UtilidadesRegistroS.arrancarNS(numPuertoRMIRegistry);
-           UtilidadesRegistroS.RegistrarObjetoRemoto(objRemoto, direccionIpRMIRegistry, numPuertoRMIRegistry, "ObjetoRemotoAsintomatico");            
+           UtilidadesRegistroS.RegistrarObjetoRemoto(objRemoto, direccionIpRMIRegistry, numPuertoRMIRegistry, "ObjetoRemotoNotificaciones");            
            
         } catch (Exception e)
         {

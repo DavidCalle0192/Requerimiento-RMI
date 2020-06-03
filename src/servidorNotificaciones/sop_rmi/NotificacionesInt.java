@@ -8,11 +8,12 @@ package servidorNotificaciones.sop_rmi;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import servidorNotificaciones.dto.AlertaDTO;
 
 /**
  *
  * @author JhonMZ
  */
 public interface NotificacionesInt extends Remote{
-    public void enviarAlerta()throws RemoteException;
+    public void enviarAlerta(AlertaDTO objAlerta)throws RemoteException;
 }

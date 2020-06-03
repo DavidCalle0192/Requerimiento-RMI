@@ -16,6 +16,9 @@ import servidorAlertas.dao.HistorialAlertaDAO;
 import servidorAlertas.dto.HistorialDTO;
 import servidorAlertas.dto.IndicadorDTO;
 import servidorAlertas.dto.PacienteDTO;
+import servidorAlertas.utilidades.UtilidadesRegistroC;
+import servidorNotificaciones.dto.AlertaDTO;
+import servidorNotificaciones.sop_rmi.NotificacionesInt;
 
 /**
  *
@@ -24,6 +27,7 @@ import servidorAlertas.dto.PacienteDTO;
 public class ClsGestionPaciente extends UnicastRemoteObject implements GestionPacienteInt{
 
     private ArrayList<PacienteDTO> pacientes;
+    private NotificacionesInt objRefRemNotificacion;
     private int MAX_PACIENTES = 1;
 
     public ClsGestionPaciente() throws RemoteException {
@@ -77,6 +81,11 @@ public class ClsGestionPaciente extends UnicastRemoteObject implements GestionPa
         String respuesta = "";
         
         int puntuacion = obtenerPuntuacion(objIndicador);
+        System.out.println("Indicadores del paciente con id "+objIndicador.getIdPaciente());
+        System.out.println("FC:"+objIndicador.getFrecuenciaCardiaca());
+        System.out.println("FR:"+objIndicador.getFrecuenciaRespiratoria());
+        System.out.println("ToC:"+objIndicador.getTemperatura());
+        System.out.println("Puntuacion:"+puntuacion);
         
         if(puntuacion > 1){
             HistorialDTO objHistorial = new HistorialDTO(LocalDate.now(), LocalTime.now(), puntuacion);
@@ -90,10 +99,14 @@ public class ClsGestionPaciente extends UnicastRemoteObject implements GestionPa
             System.out.println("Enviando y almacenando alerta del paciente "+objIndicador.getIdPaciente()+"...");
             Stack<HistorialDTO> historial = HistorialAlertaDAO.obtenerUlt5Reg(objIndicador.getIdPaciente());
             HistorialAlertaDAO.agregarHistorial(objHistorial, objIndicador.getIdPaciente());
-            while(!historial.empty()){
-                System.out.println(historial.pop().getHora().toString());
-            }
-            System.out.println("Alerta almacenada");
+
+            PacienteDTO objPaciente = buscarPaciente(objIndicador.getIdPaciente());
+            
+            AlertaDTO objAlerta = new AlertaDTO(historial, objIndicador, objPaciente, puntuacion);
+            
+            objRefRemNotificacion.enviarAlerta(objAlerta);
+            
+            System.out.println("Alerta almacenada y enviada");
         }else{
             System.out.println("Continuar monitorización del paciente "+objIndicador.getIdPaciente());
             respuesta = "Continuar monitorización ";
@@ -148,5 +161,26 @@ public class ClsGestionPaciente extends UnicastRemoteObject implements GestionPa
             }
         }
         return res;
+    }
+    
+    private PacienteDTO buscarPaciente(int idPaciente){
+        //System.out.println("Buscando paciente...");
+        PacienteDTO objPaciente = null;
+        if(idPaciente != 0){
+            for (PacienteDTO pacienteDTO : pacientes) {
+                if(pacienteDTO.getId() == idPaciente){
+                    objPaciente = pacienteDTO;
+                    break;
+                }
+            }
+        }
+        return objPaciente;
+    }
+    
+        public void consultarReferenciaRemotaDeNotificacion(String dir_Ip, int numPuerto)
+    {
+        System.out.println(" ");
+        System.out.println("Desde consultarReferenciaRemotaDeNotificacion()...");
+        objRefRemNotificacion = (NotificacionesInt) UtilidadesRegistroC.obtenerObjRemoto(dir_Ip, numPuerto, "ObjetoRemotoNotificaciones");
     }
 }
