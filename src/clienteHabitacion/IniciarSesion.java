@@ -144,7 +144,7 @@ public class IniciarSesion extends javax.swing.JFrame {
             }else {
                 ClienteMedico cm = new ClienteMedico();
                 objRemoto = cm.obtenerObjRemoto();
-                MenuMedico menu = new MenuMedico(objRemoto);
+                MenuMedico menu = new MenuMedico(objRemoto,cm);
                 menu.setVisible(true);
                 this.setVisible(false);
             }

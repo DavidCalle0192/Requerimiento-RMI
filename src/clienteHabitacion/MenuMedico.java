@@ -14,12 +14,14 @@ import servidorAlertas.sop_rmi.GestionPacienteInt;
 public class MenuMedico extends javax.swing.JFrame {
 
     public static GestionPacienteInt objRemoto;
+    public static ClienteMedico cm;
     /**
      * Creates new form MenuMedico
      */
     
-     public MenuMedico(GestionPacienteInt objRemoto) {
+     public MenuMedico(GestionPacienteInt objRemoto, ClienteMedico cm) {
          this.objRemoto = objRemoto;
+         this.cm = cm;
          initComponents();
         }
     public MenuMedico() {
@@ -44,6 +46,11 @@ public class MenuMedico extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         btn_registrarPaciente.setText("Registrar paciente");
+        btn_registrarPaciente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_registrarPacienteActionPerformed(evt);
+            }
+        });
 
         btn_iniciarSeguimiento.setText("Iniciar seguimiento");
 
@@ -113,6 +120,14 @@ public class MenuMedico extends javax.swing.JFrame {
     private void btn_salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_salirActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btn_salirActionPerformed
+
+    private void btn_registrarPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_registrarPacienteActionPerformed
+        // TODO add your handling code here:
+        RegistrarPaciente rp = new RegistrarPaciente(objRemoto, cm);
+        rp.setVisible(true);
+        this.setVisible(false);
+        
+    }//GEN-LAST:event_btn_registrarPacienteActionPerformed
 
     /**
      * @param args the command line arguments
