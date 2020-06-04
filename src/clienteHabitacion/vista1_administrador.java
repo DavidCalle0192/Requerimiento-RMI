@@ -121,7 +121,6 @@ public class vista1_administrador extends javax.swing.JFrame {
                     //this.dispose();
                     objRemoto.establecerMaxPacientes(cantRegistros);
                     Vista2_administrador vista2 = new Vista2_administrador(objRemoto);
-                
                     vista2.cargarInformacion();//validar numero
                     vista2.setVisible(true);
                     //this.dispose();

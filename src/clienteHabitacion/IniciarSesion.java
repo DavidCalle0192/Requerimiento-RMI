@@ -11,7 +11,6 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import servidorAlertas.sop_rmi.GestionPacienteInt;
 
-
 /**
  *
  * @author usuario
@@ -19,16 +18,15 @@ import servidorAlertas.sop_rmi.GestionPacienteInt;
 public class IniciarSesion extends javax.swing.JFrame {
 
     public static GestionPacienteInt objRemoto;
-    
+
     /**
      * Creates new form IniciarSesion
      */
     //variables de conexión
-    
     public IniciarSesion() {
         initComponents();
         setLocationRelativeTo(null);
-        
+
     }
 
     /**
@@ -49,7 +47,7 @@ public class IniciarSesion extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(51, 153, 255));
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
         Label_direccion_ip.setText("Dirección IP");
         Label_direccion_ip.setToolTipText("Ingrese la dirección ip donde desea establecer la conexión");
@@ -59,6 +57,11 @@ public class IniciarSesion extends javax.swing.JFrame {
 
         TextField_direccion_ip.setText("localhost");
         TextField_direccion_ip.setToolTipText("");
+        TextField_direccion_ip.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TextField_direccion_ipActionPerformed(evt);
+            }
+        });
 
         TextField_puerto.setText("2020");
 
@@ -128,32 +131,32 @@ public class IniciarSesion extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    public void validarUsuario() throws RemoteException{
-    
-        ClienteHabitacion cliente = new ClienteHabitacion();
-        cliente.setDireccionIp(TextField_direccion_ip.getText());
-        cliente.setPuerto(Integer.parseInt(TextField_puerto.getText()));
-        
-            //this.setVisible(false);
-            this.dispose();
-            cliente.principal();
-            objRemoto = cliente.devolverObjRemoto();
-            if(objRemoto.obtenerMaxPacientes()==-1){
-                vista1_administrador vista1 = new vista1_administrador(cliente.devolverObjRemoto());
-                vista1.setVisible(true);
-            }else{
-                JOptionPane.showInternalMessageDialog(null, "hola");
-            }
-    }
     private void Button_establecer_conexionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_establecer_conexionActionPerformed
         try {
-            // TODO add your handling code here:
-            validarUsuario();
+            ClienteAdministrador ca = new ClienteAdministrador();
+            ca.iniciarSesion(TextField_direccion_ip.getText(), Integer.parseInt(TextField_puerto.getText()));
+            objRemoto = ca.obtenerObjRemoto();
+            int tamArray = objRemoto.obtenerMaxPacientes();
+            if(tamArray==-1){//si es -1 es admin
+                vista1_administrador v1 = new vista1_administrador(objRemoto);
+                v1.setVisible(true);
+                this.setVisible(false);
+            }else {
+                ClienteMedico cm = new ClienteMedico();
+                objRemoto = cm.obtenerObjRemoto();
+                MenuMedico menu = new MenuMedico(objRemoto);
+                menu.setVisible(true);
+                this.setVisible(false);
+            }
         } catch (RemoteException ex) {
             Logger.getLogger(IniciarSesion.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }//GEN-LAST:event_Button_establecer_conexionActionPerformed
+
+    private void TextField_direccion_ipActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TextField_direccion_ipActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TextField_direccion_ipActionPerformed
 
     /**
      * @param args the command line arguments
@@ -167,11 +170,11 @@ public class IniciarSesion extends javax.swing.JFrame {
         try {
             javax.swing.UIManager.setLookAndFeel("com.jtattoo.plaf.aluminium.AluminiumLookAndFeel");
             /*for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }*/
+             if ("Nimbus".equals(info.getName())) {
+             javax.swing.UIManager.setLookAndFeel(info.getClassName());
+             break;
+             }
+             }*/
         } catch (ClassNotFoundException ex) {
             java.util.logging.Logger.getLogger(IniciarSesion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
@@ -184,9 +187,6 @@ public class IniciarSesion extends javax.swing.JFrame {
         //</editor-fold>
         //</editor-fold>
 
-       
-        
-       
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
