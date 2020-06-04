@@ -6,9 +6,10 @@
 package servidorAlertas.sop_rmi;
 
 import servidorAlertas.dto.IndicadorDTO;
-import servidorAlertas.dto.PacienteDTO;
+import servidorAlertas.dto.UsuarioDTO;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 
 /**
  *
@@ -16,9 +17,11 @@ import java.rmi.RemoteException;
  */
 public interface GestionPacienteInt extends Remote{
     
-    public String registrarPaciente(PacienteDTO objPaciente) throws RemoteException;  
+    public String registrarPaciente(UsuarioDTO objPaciente) throws RemoteException;  
     public String enviarIndicadores(IndicadorDTO objIndicador) throws RemoteException; 
     public boolean establecerMaxPacientes(int num)throws RemoteException;
     public int obtenerMaxPacientes()throws RemoteException;
+    
+    public ArrayList<UsuarioDTO> listarPacientes()throws RemoteException;
     
 }

@@ -10,7 +10,7 @@ import java.util.Stack;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 import servidorAlertas.dto.HistorialDTO;
-import servidorAlertas.dto.PacienteDTO;
+import servidorAlertas.dto.UsuarioDTO;
 import servidorNotificaciones.dto.AlertaDTO;
 
 /**
@@ -277,7 +277,7 @@ public class VistaNotificaciones extends javax.swing.JFrame {
     }
     
     public void editarInfo(AlertaDTO objAlertaDTO){
-        PacienteDTO objPaciente = objAlertaDTO.getPaciente();
+        UsuarioDTO objPaciente = objAlertaDTO.getPaciente();
         lblIdPaciente.setText("N° Id:"+objPaciente.getId());
         lblNomApe.setText("Nombre y apellidos:"+objPaciente.getNombres()+" "+objPaciente.getApellidos());
         lblDireccion.setText("Direccion:"+objPaciente.getDireccion());

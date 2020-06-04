@@ -12,7 +12,7 @@ import java.time.LocalTime;
 import java.util.Stack;
 import servidorAlertas.dto.HistorialDTO;
 import servidorAlertas.dto.IndicadorDTO;
-import servidorAlertas.dto.PacienteDTO;
+import servidorAlertas.dto.UsuarioDTO;
 
 /**
  *
@@ -21,12 +21,12 @@ import servidorAlertas.dto.PacienteDTO;
 public class AlertaDTO implements Serializable{
     private Stack<HistorialDTO> historial;
     private IndicadorDTO indicadores;
-    private PacienteDTO paciente;
+    private UsuarioDTO paciente;
     private LocalDate fecha;
     private LocalTime hora;
     private int puntuacion;
 
-    public AlertaDTO(Stack<HistorialDTO> historial, IndicadorDTO indicadores, PacienteDTO paciente, LocalDate fecha, LocalTime hora, int puntuacion) {
+    public AlertaDTO(Stack<HistorialDTO> historial, IndicadorDTO indicadores, UsuarioDTO paciente, LocalDate fecha, LocalTime hora, int puntuacion) {
         this.historial = historial;
         this.indicadores = indicadores;
         this.paciente = paciente;
@@ -51,11 +51,11 @@ public class AlertaDTO implements Serializable{
         this.indicadores = indicadores;
     }
 
-    public PacienteDTO getPaciente() {
+    public UsuarioDTO getPaciente() {
         return paciente;
     }
 
-    public void setPaciente(PacienteDTO paciente) {
+    public void setPaciente(UsuarioDTO paciente) {
         this.paciente = paciente;
     }
 

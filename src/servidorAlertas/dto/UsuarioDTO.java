@@ -12,7 +12,7 @@ import java.io.Serializable;
  *
  * @author usuario
  */
-public class PacienteDTO implements Serializable{
+public class UsuarioDTO implements Serializable{
     
     private int id;
     private String tipo_id;
@@ -20,7 +20,7 @@ public class PacienteDTO implements Serializable{
     private String apellidos;
     private String Direccion;
 
-    public PacienteDTO(int id, String tipo_id, String nombres, String apellidos, String Direccion) {
+    public UsuarioDTO(int id, String tipo_id, String nombres, String apellidos, String Direccion) {
         this.id = id;
         this.tipo_id = tipo_id;
         this.nombres = nombres;

@@ -15,7 +15,7 @@ import java.util.Stack;
 import servidorAlertas.dao.HistorialAlertaDAO;
 import servidorAlertas.dto.HistorialDTO;
 import servidorAlertas.dto.IndicadorDTO;
-import servidorAlertas.dto.PacienteDTO;
+import servidorAlertas.dto.UsuarioDTO;
 import servidorAlertas.utilidades.UtilidadesRegistroC;
 import servidorNotificaciones.dto.AlertaDTO;
 import servidorNotificaciones.sop_rmi.NotificacionesInt;
@@ -26,17 +26,17 @@ import servidorNotificaciones.sop_rmi.NotificacionesInt;
  */
 public class ClsGestionPaciente extends UnicastRemoteObject implements GestionPacienteInt{
 
-    private ArrayList<PacienteDTO> pacientes;
+    private ArrayList<UsuarioDTO> pacientes;
     private NotificacionesInt objRefRemNotificacion;
-    private int MAX_PACIENTES = 1;
+    private int MAX_PACIENTES = -1;
 
     public ClsGestionPaciente() throws RemoteException {
         super();
-        this.pacientes = new ArrayList<PacienteDTO>();
+        this.pacientes = new ArrayList<UsuarioDTO>();
     }
     
     @Override
-    public String registrarPaciente(PacienteDTO objPaciente) throws RemoteException {
+    public String registrarPaciente(UsuarioDTO objPaciente) throws RemoteException {
         System.out.println("Ejecutando registrarPaciente...");
         String respuesta = "";
         
@@ -100,7 +100,7 @@ public class ClsGestionPaciente extends UnicastRemoteObject implements GestionPa
             Stack<HistorialDTO> historial = HistorialAlertaDAO.obtenerUlt5Reg(objIndicador.getIdPaciente());
             HistorialAlertaDAO.agregarHistorial(objHistorial, objIndicador.getIdPaciente());
 
-            PacienteDTO objPaciente = buscarPaciente(objIndicador.getIdPaciente());
+            UsuarioDTO objPaciente = buscarPaciente(objIndicador.getIdPaciente());
             
             AlertaDTO objAlerta = new AlertaDTO(historial, objIndicador, objPaciente,LocalDate.now(),LocalTime.now(),puntuacion);
             
@@ -134,8 +134,13 @@ public class ClsGestionPaciente extends UnicastRemoteObject implements GestionPa
     @Override
     public boolean establecerMaxPacientes(int num) throws RemoteException {
         System.out.println("Ejecutando establecerMaxPacientes...");
-        this.MAX_PACIENTES = num;
-        return true;
+        if(num>0 && num<5){
+            this.MAX_PACIENTES = num;
+            return true;
+        }else{
+        return false;
+        }
+        
     }
 
     @Override
@@ -149,11 +154,11 @@ public class ClsGestionPaciente extends UnicastRemoteObject implements GestionPa
      * @param objPaciente objeto que contiene la informacion del paciente
      * @return retorna true si el paciente ya esta registrado o false si no lo esta
      */
-    private boolean pacienteRegistrado(PacienteDTO objPaciente){
+    private boolean pacienteRegistrado(UsuarioDTO objPaciente){
         //System.out.println("Buscando paciente...");
         boolean res = false;
         if(objPaciente != null){
-            for (PacienteDTO pacienteDTO : pacientes) {
+            for (UsuarioDTO pacienteDTO : pacientes) {
                 if(pacienteDTO.getId() == objPaciente.getId()){
                     res = true;
                     break;
@@ -163,11 +168,11 @@ public class ClsGestionPaciente extends UnicastRemoteObject implements GestionPa
         return res;
     }
     
-    private PacienteDTO buscarPaciente(int idPaciente){
+    private UsuarioDTO buscarPaciente(int idPaciente){
         //System.out.println("Buscando paciente...");
-        PacienteDTO objPaciente = null;
+        UsuarioDTO objPaciente = null;
         if(idPaciente != 0){
-            for (PacienteDTO pacienteDTO : pacientes) {
+            for (UsuarioDTO pacienteDTO : pacientes) {
                 if(pacienteDTO.getId() == idPaciente){
                     objPaciente = pacienteDTO;
                     break;
@@ -183,4 +188,12 @@ public class ClsGestionPaciente extends UnicastRemoteObject implements GestionPa
         System.out.println("Desde consultarReferenciaRemotaDeNotificacion()...");
         objRefRemNotificacion = (NotificacionesInt) UtilidadesRegistroC.obtenerObjRemoto(dir_Ip, numPuerto, "ObjetoRemotoNotificaciones");
     }
+
+    @Override
+    public ArrayList<UsuarioDTO> listarPacientes() throws RemoteException {
+        
+        return pacientes;
+    }
+        
+        
 }

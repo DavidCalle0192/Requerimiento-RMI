@@ -11,7 +11,7 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.Stack;
 import servidorAlertas.dto.HistorialDTO;
 import servidorAlertas.dto.IndicadorDTO;
-import servidorAlertas.dto.PacienteDTO;
+import servidorAlertas.dto.UsuarioDTO;
 import servidorNotificaciones.dto.AlertaDTO;
 import servidorNotificaciones.vistas.VistaNotificaciones;
 
@@ -31,7 +31,7 @@ public class ClsNotificaciones extends UnicastRemoteObject implements Notificaci
         VistaNotificaciones objVista = new VistaNotificaciones();
         objVista.editarInfo(objAlerta);
         objVista.setVisible(true);
-        /*PacienteDTO objPaciente = objAlerta.getPaciente();
+        /*UsuarioDTO objPaciente = objAlerta.getPaciente();
         
         System.out.println("Nombre:"+objPaciente.getNombres()+" "+objPaciente.getApellidos());
         System.out.println("Identificacion: "+objPaciente.getTipo_id()+" "+objPaciente.getId());
