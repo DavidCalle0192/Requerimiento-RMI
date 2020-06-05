@@ -5,9 +5,7 @@
  */
 package clienteHabitacion;
 
-import static clienteHabitacion.ClienteAdministrador.objRemoto;
-import static clienteHabitacion.ClienteHabitacion.objRemoto;
-import clienteHabitacion.utilidades.UtilidadesConsola;
+
 import clienteHabitacion.utilidades.UtilidadesRegistroC;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
@@ -23,8 +21,6 @@ public class ClienteMedico {
    
     public static GestionPacienteInt objRemoto;
     private static int cont = 0;
-    public static String direccionIp;
-    public static int puerto;
     /**
      * @param args the command line arguments
      */
@@ -34,9 +30,10 @@ public class ClienteMedico {
         System.out.println("valor: "+objRemoto.obtenerMaxPacientes());
     }
     
+    /*
     public GestionPacienteInt obtenerObjRemoto(){
         return objRemoto;
-    }
+    }*/
     
      public boolean validarPacientesExistentes() throws RemoteException{
             if(objRemoto.listarPacientes().size()==0){

@@ -134,7 +134,7 @@ public class ClsGestionPaciente extends UnicastRemoteObject implements GestionPa
     @Override
     public synchronized boolean establecerMaxPacientes(int num) throws RemoteException {
         System.out.println("Ejecutando establecerMaxPacientes...");
-        if(num>0 && num<5){
+        if(num>=1 && num<=5){
             this.MAX_PACIENTES = num;
             return true;
         }else{
