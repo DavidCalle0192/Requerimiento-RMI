@@ -175,7 +175,7 @@ public class RegistrarPaciente extends javax.swing.JFrame {
     private void btn_aceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_aceptarActionPerformed
         // TODO add your handling code here:
           try {
-            JOptionPane.showInternalMessageDialog(null,"lista de pacientes"+objRemoto.listarPacientes().size());
+            //JOptionPane.showInternalMessageDialog(null,"lista de pacientes"+objRemoto.listarPacientes().size());
       
             JOptionPane.showInternalMessageDialog(null,"Maximo de pacientes"+objRemoto.obtenerMaxPacientes());
             /*

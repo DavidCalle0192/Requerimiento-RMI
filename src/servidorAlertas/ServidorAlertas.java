@@ -38,6 +38,7 @@ public class ServidorAlertas {
                 System.out.println("Digite un puerto valido");
             }
         }while(num == null);
+        //TODO:Cambiar a la interfaz
         ClsGestionPaciente objRemoto = new ClsGestionPaciente();
         objRemoto.consultarReferenciaRemotaDeNotificacion(direccionIpRMIRegistry, numPuertoRMIRegistry);
         try
