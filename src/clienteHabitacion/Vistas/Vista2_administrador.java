@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package clienteHabitacion;
+package clienteHabitacion.Vistas;
 
 import java.rmi.RemoteException;
 import javax.swing.JOptionPane;
@@ -16,23 +16,19 @@ import servidorAlertas.sop_rmi.GestionPacienteInt;
 public class Vista2_administrador extends javax.swing.JFrame {
 
     public static GestionPacienteInt objRemoto;
+
     /**
      * Creates new form MenuPrincipal
      */
     public Vista2_administrador() {
         initComponents();
     }
-    
-    public Vista2_administrador( GestionPacienteInt objRemoto) {
+
+    public Vista2_administrador(GestionPacienteInt objRemoto) {
         this.objRemoto = objRemoto;
         initComponents();
     }
 
-    public void validar()throws RemoteException{
-        
-            JOptionPane.showInternalMessageDialog(null, ""+objRemoto.toString());
-        
-    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -48,7 +44,12 @@ public class Vista2_administrador extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        btn_cerrarSesion.setText("Cerrar sesión");
+        btn_cerrarSesion.setText("Terminar");
+        btn_cerrarSesion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_cerrarSesionActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -78,7 +79,7 @@ public class Vista2_administrador extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(19, 19, 19)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addContainerGap(43, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -91,16 +92,20 @@ public class Vista2_administrador extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    public void cargarInformacion() throws RemoteException{
-        
-        String texto="El número de registros es: "+objRemoto.obtenerMaxPacientes();
+    private void btn_cerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cerrarSesionActionPerformed
+        // TODO add your handling code here:
+        //this.setVisible(false);
+        this.dispose();
+    }//GEN-LAST:event_btn_cerrarSesionActionPerformed
+
+    public void cargarInformacion() throws RemoteException {
+        String texto = "El número de registros es: " + objRemoto.obtenerMaxPacientes();
         lb_cantRegistros.setText(texto);
-     }
-    
+    }
+
     /**
      * @param args the command line arguments
      */
-    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -132,8 +137,7 @@ public class Vista2_administrador extends javax.swing.JFrame {
                 new Vista2_administrador().setVisible(true);
             }
         });
-        
-     
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -3,9 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package clienteHabitacion;
+package clienteHabitacion.Vistas;
 
-import clienteHabitacion.Vistas.Vista2_administrador;
 import java.rmi.RemoteException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -19,10 +18,11 @@ import servidorAlertas.sop_rmi.GestionPacienteInt;
 public class vista1_administrador extends javax.swing.JFrame {
 
     public static GestionPacienteInt objRemoto;
+
     /**
      * Creates new form IniciarSesion
      */
-    
+
     public vista1_administrador() {
         initComponents();
     }
@@ -31,6 +31,7 @@ public class vista1_administrador extends javax.swing.JFrame {
         this.objRemoto = objRemoto;
         initComponents();
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -106,53 +107,51 @@ public class vista1_administrador extends javax.swing.JFrame {
 
     private void btn_aceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_aceptarActionPerformed
         // TODO add your handling code here:
-        
-        String aux=txf_numMaxReg.getText();
-        if(aux.equals("")){
+
+        String aux = txf_numMaxReg.getText();
+        if (aux.equals("")) {
             JOptionPane.showMessageDialog(null, "Por favor ingrese un valor");
-        }else{
-            if(esNumerico(aux)){
-            int cantRegistros=Integer.parseInt(txf_numMaxReg.getText());
-                if(cantRegistros<0 || cantRegistros>5){
+        } else {
+            if (esNumerico(aux)) {
+                int cantRegistros = Integer.parseInt(txf_numMaxReg.getText());
+                if (cantRegistros < 0 || cantRegistros > 5) {
                     JOptionPane.showMessageDialog(null, "El valor debe ser entre 0 y 5");
                     txf_numMaxReg.setText("");
-                }else{
-                try {
-                    this.setVisible(false);
-                    //this.dispose();
-                    objRemoto.establecerMaxPacientes(cantRegistros);
-                    Vista2_administrador vista2 = new Vista2_administrador(objRemoto);
-                    vista2.cargarInformacion();//validar numero
-                    vista2.setVisible(true);
-                    JOptionPane.showMessageDialog(null, "max: "+ objRemoto.obtenerMaxPacientes());
-                    //this.dispose();
-                } catch (RemoteException ex) {
-                    Logger.getLogger(vista1_administrador.class.getName()).log(Level.SEVERE, null, ex);
-                    JOptionPane.showInternalMessageDialog(null, "Error de conexión");
+                } else {
+                    try {
+                        this.setVisible(false);
+                        //this.dispose();
+                        objRemoto.establecerMaxPacientes(cantRegistros);
+                        Vista2_administrador vista2 = new Vista2_administrador(objRemoto);
+                        vista2.cargarInformacion();//validar numero
+                        vista2.setVisible(true);
+                    } catch (RemoteException ex) {
+                        Logger.getLogger(vista1_administrador.class.getName()).log(Level.SEVERE, null, ex);
+                        JOptionPane.showInternalMessageDialog(null, "Error de conexión");
+                    }
                 }
-                       
-                }
-            
-        }else{
-            JOptionPane.showMessageDialog(null, "El valor ingresado no es númerico");
-            txf_numMaxReg.setText("");
+
+            } else {
+                JOptionPane.showMessageDialog(null, "El valor ingresado no es númerico");
+                txf_numMaxReg.setText("");
+            }
         }
-        }
-        
+
     }//GEN-LAST:event_btn_aceptarActionPerformed
 
-    public boolean esNumerico(String cadena){
-	
-        try{
-        
-            if(cadena.matches("\\d*")){
-            return true;
-        }
-        }catch(NumberFormatException e){
-            
+    public boolean esNumerico(String cadena) {
+
+        try {
+
+            if (cadena.matches("\\d*")) {
+                return true;
+            }
+        } catch (NumberFormatException e) {
+
         }
         return false;
-}
+    }
+
     /**
      * @param args the command line arguments
      */
