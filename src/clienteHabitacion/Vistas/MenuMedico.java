@@ -7,9 +7,12 @@ package clienteHabitacion.Vistas;
 
 import clienteHabitacion.ClienteMedico;
 import java.rmi.RemoteException;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import servidorAlertas.dto.IndicadorDTO;
 import servidorAlertas.sop_rmi.GestionPacienteInt;
 
 /**
@@ -20,6 +23,9 @@ public class MenuMedico extends javax.swing.JFrame {
 
     public static GestionPacienteInt objRemoto;
     public static ClienteMedico cm;
+    public static int bandera = 0;
+    public static String texto;
+    
 
     /**
      * Creates new form MenuMedico
@@ -35,6 +41,43 @@ public class MenuMedico extends javax.swing.JFrame {
         initComponents();
     }
 
+    public void hilo(){
+        texto="";
+        bandera=0;
+        txtArea_seguimiento.setText("");
+        Timer timer = new Timer();
+        TimerTask task = new TimerTask() {
+
+            @Override
+            public void run() {
+                
+                if(bandera == 1){
+                    timer.cancel();
+                }else{
+                    try {
+                        for(int i=0;i<objRemoto.listarPacientes().size();i++){
+                            int id = objRemoto.listarPacientes().get(i).getId();
+                            String tipoId = objRemoto.listarPacientes().get(i).getTipo_id();
+                            IndicadorDTO indicador = cm.iniciarSeguimiento(id);
+                            texto = texto + 
+                                    "ID paciente: " + id +
+                                    "\nFrecuencia cardiaca: " + indicador.getFrecuenciaCardiaca()+
+                                    "\nFrecuencia respiratoria: " + indicador.getFrecuenciaRespiratoria()+
+                                    "\nTemperatura: "+ indicador.getTemperatura()+"\n\n"
+                                    
+                                    ;
+                        }
+                        txtArea_seguimiento.setText(texto);
+                    } catch (RemoteException ex) {
+                        Logger.getLogger(MenuMedico.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+        
+        };
+        timer.schedule(task, 0, 8000);
+        
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -49,6 +92,9 @@ public class MenuMedico extends javax.swing.JFrame {
         btn_iniciarSeguimiento = new javax.swing.JButton();
         btn_salir = new javax.swing.JButton();
         lb_menuMedico = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        txtArea_seguimiento = new javax.swing.JTextArea();
+        btn_paraSeguimiento = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -60,6 +106,11 @@ public class MenuMedico extends javax.swing.JFrame {
         });
 
         btn_iniciarSeguimiento.setText("Iniciar seguimiento");
+        btn_iniciarSeguimiento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_iniciarSeguimientoActionPerformed(evt);
+            }
+        });
 
         btn_salir.setText("Salir");
         btn_salir.addActionListener(new java.awt.event.ActionListener() {
@@ -75,34 +126,38 @@ public class MenuMedico extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(19, 19, 19)
-                        .addComponent(btn_registrarPaciente))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btn_iniciarSeguimiento, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(btn_salir, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(24, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(50, 50, 50)
-                .addComponent(lb_menuMedico)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(lb_menuMedico)
+                    .addComponent(btn_registrarPaciente)
+                    .addComponent(btn_iniciarSeguimiento)
+                    .addComponent(btn_salir, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(302, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(12, Short.MAX_VALUE)
+                .addContainerGap()
                 .addComponent(lb_menuMedico)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btn_registrarPaciente)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btn_iniciarSeguimiento)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btn_salir)
-                .addGap(26, 26, 26))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
+
+        txtArea_seguimiento.setColumns(20);
+        txtArea_seguimiento.setRows(5);
+        jScrollPane1.setViewportView(txtArea_seguimiento);
+
+        btn_paraSeguimiento.setText("Parar Seguimiento");
+        btn_paraSeguimiento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_paraSeguimientoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -110,15 +165,27 @@ public class MenuMedico extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(25, 25, 25)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 403, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(31, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btn_paraSeguimiento)
+                .addGap(65, 65, 65))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(23, 23, 23)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btn_paraSeguimiento)
+                .addContainerGap(12, Short.MAX_VALUE))
         );
 
         pack();
@@ -146,6 +213,16 @@ public class MenuMedico extends javax.swing.JFrame {
             Logger.getLogger(MenuMedico.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btn_registrarPacienteActionPerformed
+
+    private void btn_paraSeguimientoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_paraSeguimientoActionPerformed
+        // TODO add your handling code here:
+        bandera=1;
+    }//GEN-LAST:event_btn_paraSeguimientoActionPerformed
+
+    private void btn_iniciarSeguimientoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_iniciarSeguimientoActionPerformed
+        // TODO add your handling code here:
+        hilo();
+    }//GEN-LAST:event_btn_iniciarSeguimientoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -184,9 +261,12 @@ public class MenuMedico extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_iniciarSeguimiento;
+    private javax.swing.JButton btn_paraSeguimiento;
     private javax.swing.JButton btn_registrarPaciente;
     private javax.swing.JButton btn_salir;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lb_menuMedico;
+    private javax.swing.JTextArea txtArea_seguimiento;
     // End of variables declaration//GEN-END:variables
 }
