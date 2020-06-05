@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package clienteHabitacion;
+package clienteHabitacion.Vistas;
 
+import clienteHabitacion.ClienteMedico;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -21,6 +22,7 @@ public class RegistarPaciente extends javax.swing.JFrame {
 
     public static GestionPacienteInt objRemoto;
     public static ClienteMedico cm;
+
     /**
      * Creates new form prueba
      */
@@ -29,7 +31,7 @@ public class RegistarPaciente extends javax.swing.JFrame {
         this.cm = cm;
         initComponents();
     }
-    
+
     public RegistarPaciente() {
         initComponents();
     }
@@ -139,22 +141,28 @@ public class RegistarPaciente extends javax.swing.JFrame {
             String nombres = txf_nombres.getText();
             String apellidos = txf_apellidos.getText();
             String direccion = txf_apellidos.getText();
-            UsuarioDTO paciente = new UsuarioDTO(id, tipoId, nombres, apellidos, direccion);
-            objRemoto.registrarPaciente(paciente);
-            ArrayList<UsuarioDTO> array =objRemoto.listarPacientes();
-            JOptionPane.showMessageDialog(null, "tam Array: "+ objRemoto.listarPacientes().size());
-            for(int i =0; i<array.size(); i++){
-                JOptionPane.showMessageDialog(null, "id: "+ array.get(i).getId());
-                JOptionPane.showMessageDialog(null, "tipoid: "+ array.get(i).getTipo_id());
-                JOptionPane.showMessageDialog(null, "nombre "+ array.get(i).getNombres());
-                JOptionPane.showMessageDialog(null, "apellido: "+ array.get(i).getApellidos());
-                JOptionPane.showMessageDialog(null, "direccion: "+ array.get(i).getDireccion());
+
+            JOptionPane.showMessageDialog(null, "valor coincidencia: "+ cm.existeId(id, objRemoto));
+            if (cm.existeId(id, objRemoto)) {
+                JOptionPane.showMessageDialog(null, "El id ya existe");
+            } else {
+                UsuarioDTO paciente = new UsuarioDTO(id, tipoId, nombres, apellidos, direccion);
+                objRemoto.registrarPaciente(paciente);
+                ArrayList<UsuarioDTO> array = objRemoto.listarPacientes();
+                JOptionPane.showMessageDialog(null, "tam Array: " + objRemoto.listarPacientes().size());
+                for (int i = 0; i < array.size(); i++) {
+                    JOptionPane.showMessageDialog(null, "id: " + array.get(i).getId());
+                    JOptionPane.showMessageDialog(null, "tipoid: " + array.get(i).getTipo_id());
+                    JOptionPane.showMessageDialog(null, "nombre " + array.get(i).getNombres());
+                    JOptionPane.showMessageDialog(null, "apellido: " + array.get(i).getApellidos());
+                    JOptionPane.showMessageDialog(null, "direccion: " + array.get(i).getDireccion());
+                }
+                JOptionPane.showMessageDialog(null, "Paciente registrado con éxito ");
+                this.setVisible(false);
+                MenuMedico menu = new MenuMedico(objRemoto, cm);
+                menu.setVisible(true);
             }
-            JOptionPane.showMessageDialog(null, "Paciente registrado con éxito ");
-            this.setVisible(false);
-            MenuMedico menu = new MenuMedico(objRemoto, cm);
-            menu.setVisible(true);
-            
+
         } catch (RemoteException ex) {
             Logger.getLogger(RegistarPaciente.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package clienteHabitacion;
+package clienteHabitacion.Vistas;
 
 import java.rmi.RemoteException;
 import javax.swing.JOptionPane;

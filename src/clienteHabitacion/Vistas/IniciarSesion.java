@@ -3,8 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package clienteHabitacion;
+package clienteHabitacion.Vistas;
 
+import clienteHabitacion.ClienteAdministrador;
+import clienteHabitacion.ClienteMedico;
 import java.rmi.RemoteException;
 import java.util.logging.Level;
 import java.util.logging.Logger;

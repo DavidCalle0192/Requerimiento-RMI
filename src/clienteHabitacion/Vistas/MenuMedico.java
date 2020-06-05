@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package clienteHabitacion;
+package clienteHabitacion.Vistas;
 
+import clienteHabitacion.ClienteMedico;
 import java.rmi.RemoteException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -19,15 +20,17 @@ public class MenuMedico extends javax.swing.JFrame {
 
     public static GestionPacienteInt objRemoto;
     public static ClienteMedico cm;
+
     /**
      * Creates new form MenuMedico
      */
-    
-     public MenuMedico(GestionPacienteInt objRemoto, ClienteMedico cm) {
-         this.objRemoto = objRemoto;
-         this.cm = cm;
-         initComponents();
-        }
+
+    public MenuMedico(GestionPacienteInt objRemoto, ClienteMedico cm) {
+        this.objRemoto = objRemoto;
+        this.cm = cm;
+        initComponents();
+    }
+
     public MenuMedico() {
         initComponents();
     }
@@ -127,11 +130,21 @@ public class MenuMedico extends javax.swing.JFrame {
 
     private void btn_registrarPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_registrarPacienteActionPerformed
 
+        try {
             // TODO add your handling code here:
-            //RegistrarPaciente rp = new RegistrarPaciente(objRemoto, cm);
-            RegistarPaciente rp = new RegistarPaciente(objRemoto, cm);
-            rp.setVisible(true);
-            this.setVisible(false);
+            JOptionPane.showMessageDialog(null, "array tam: " + objRemoto.listarPacientes().size());
+
+            if (objRemoto.listarPacientes().size() == objRemoto.obtenerMaxPacientes()) {
+                JOptionPane.showMessageDialog(null, "Limite de registros alcanzados");
+            } else {
+                RegistarPaciente rp = new RegistarPaciente(objRemoto, cm);
+                rp.setVisible(true);
+                this.setVisible(false);
+            }
+
+        } catch (RemoteException ex) {
+            Logger.getLogger(MenuMedico.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btn_registrarPacienteActionPerformed
 
     /**
