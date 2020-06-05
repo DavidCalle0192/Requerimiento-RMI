@@ -45,7 +45,7 @@ public class RegistarPaciente extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        btn_prueba = new javax.swing.JButton();
+        btn_crear = new javax.swing.JButton();
         lb_id = new javax.swing.JLabel();
         lb_tipoId = new javax.swing.JLabel();
         lb_nombres = new javax.swing.JLabel();
@@ -56,13 +56,14 @@ public class RegistarPaciente extends javax.swing.JFrame {
         txf_nombres = new javax.swing.JTextField();
         txf_apellidos = new javax.swing.JTextField();
         txf_direccion = new javax.swing.JTextField();
+        bnt_volver = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        btn_prueba.setText("prueba");
-        btn_prueba.addActionListener(new java.awt.event.ActionListener() {
+        btn_crear.setText("Crear");
+        btn_crear.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_pruebaActionPerformed(evt);
+                btn_crearActionPerformed(evt);
             }
         });
 
@@ -75,6 +76,13 @@ public class RegistarPaciente extends javax.swing.JFrame {
         lb_apellidos.setText("Apellidos");
 
         lb_direccion.setText("Dirección");
+
+        bnt_volver.setText("Volver al menú");
+        bnt_volver.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bnt_volverActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -99,8 +107,10 @@ public class RegistarPaciente extends javax.swing.JFrame {
                             .addComponent(txf_direccion)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(87, 87, 87)
-                        .addComponent(btn_prueba)))
-                .addContainerGap(130, Short.MAX_VALUE))
+                        .addComponent(btn_crear)
+                        .addGap(28, 28, 28)
+                        .addComponent(bnt_volver)))
+                .addContainerGap(123, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -126,14 +136,16 @@ public class RegistarPaciente extends javax.swing.JFrame {
                     .addComponent(lb_direccion)
                     .addComponent(txf_direccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(btn_prueba)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_crear)
+                    .addComponent(bnt_volver))
                 .addContainerGap(40, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btn_pruebaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_pruebaActionPerformed
+    private void btn_crearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_crearActionPerformed
         try {
             // TODO add your handling code here:
             int id = Integer.parseInt(txf_id.getText());
@@ -141,22 +153,12 @@ public class RegistarPaciente extends javax.swing.JFrame {
             String nombres = txf_nombres.getText();
             String apellidos = txf_apellidos.getText();
             String direccion = txf_apellidos.getText();
-
-            JOptionPane.showMessageDialog(null, "valor coincidencia: "+ cm.existeId(id, objRemoto));
             if (cm.existeId(id, objRemoto)) {
                 JOptionPane.showMessageDialog(null, "El id ya existe");
             } else {
                 UsuarioDTO paciente = new UsuarioDTO(id, tipoId, nombres, apellidos, direccion);
                 objRemoto.registrarPaciente(paciente);
                 ArrayList<UsuarioDTO> array = objRemoto.listarPacientes();
-                JOptionPane.showMessageDialog(null, "tam Array: " + objRemoto.listarPacientes().size());
-                for (int i = 0; i < array.size(); i++) {
-                    JOptionPane.showMessageDialog(null, "id: " + array.get(i).getId());
-                    JOptionPane.showMessageDialog(null, "tipoid: " + array.get(i).getTipo_id());
-                    JOptionPane.showMessageDialog(null, "nombre " + array.get(i).getNombres());
-                    JOptionPane.showMessageDialog(null, "apellido: " + array.get(i).getApellidos());
-                    JOptionPane.showMessageDialog(null, "direccion: " + array.get(i).getDireccion());
-                }
                 JOptionPane.showMessageDialog(null, "Paciente registrado con éxito ");
                 this.setVisible(false);
                 MenuMedico menu = new MenuMedico(objRemoto, cm);
@@ -166,7 +168,14 @@ public class RegistarPaciente extends javax.swing.JFrame {
         } catch (RemoteException ex) {
             Logger.getLogger(RegistarPaciente.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_btn_pruebaActionPerformed
+    }//GEN-LAST:event_btn_crearActionPerformed
+
+    private void bnt_volverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bnt_volverActionPerformed
+        // TODO add your handling code here:
+        this.setVisible(false);
+        MenuMedico menu = new MenuMedico(objRemoto, cm);
+        menu.setVisible(true);
+    }//GEN-LAST:event_bnt_volverActionPerformed
 
     /**
      * @param args the command line arguments
@@ -205,7 +214,8 @@ public class RegistarPaciente extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btn_prueba;
+    private javax.swing.JButton bnt_volver;
+    private javax.swing.JButton btn_crear;
     private javax.swing.JLabel lb_apellidos;
     private javax.swing.JLabel lb_direccion;
     private javax.swing.JLabel lb_id;

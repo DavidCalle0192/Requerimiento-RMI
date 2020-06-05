@@ -139,18 +139,15 @@ public class IniciarSesion extends javax.swing.JFrame {
             ca.iniciarSesion(TextField_direccion_ip.getText(), Integer.parseInt(TextField_puerto.getText()));
             objRemoto = ca.obtenerObjRemoto();
             int tamArray = objRemoto.obtenerMaxPacientes();
-            if(tamArray==-1){//si es -1 es admin
+            if (tamArray == -1) {//si es -1 es admin
                 vista1_administrador v1 = new vista1_administrador(objRemoto);
                 v1.setVisible(true);
                 this.setVisible(false);
-                JOptionPane.showMessageDialog(null, "max: "+ objRemoto.obtenerMaxPacientes());
-            }else {
+            } else {
                 ClienteMedico cm = new ClienteMedico();
-                //objRemoto = cm.obtenerObjRemoto();
-                MenuMedico menu = new MenuMedico(objRemoto,cm);
+                MenuMedico menu = new MenuMedico(objRemoto, cm);
                 menu.setVisible(true);
                 this.setVisible(false);
-                JOptionPane.showMessageDialog(null, "mAX: "+ objRemoto.obtenerMaxPacientes()) ;
             }
         } catch (RemoteException ex) {
             Logger.getLogger(IniciarSesion.class.getName()).log(Level.SEVERE, null, ex);

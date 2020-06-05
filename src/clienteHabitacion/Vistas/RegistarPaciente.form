@@ -45,10 +45,12 @@
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="87" max="-2" attributes="0"/>
-                      <Component id="btn_prueba" min="-2" max="-2" attributes="0"/>
+                      <Component id="btn_crear" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
+                      <Component id="bnt_volver" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace pref="130" max="32767" attributes="0"/>
+              <EmptySpace pref="123" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -81,19 +83,22 @@
                   <Component id="txf_direccion" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="btn_prueba" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="btn_crear" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="bnt_volver" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
               <EmptySpace pref="40" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="javax.swing.JButton" name="btn_prueba">
+    <Component class="javax.swing.JButton" name="btn_crear">
       <Properties>
-        <Property name="text" type="java.lang.String" value="prueba"/>
+        <Property name="text" type="java.lang.String" value="Crear"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_pruebaActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_crearActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="lb_id">
@@ -130,6 +135,14 @@
     <Component class="javax.swing.JTextField" name="txf_apellidos">
     </Component>
     <Component class="javax.swing.JTextField" name="txf_direccion">
+    </Component>
+    <Component class="javax.swing.JButton" name="bnt_volver">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Volver al men&#xfa;"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bnt_volverActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>
