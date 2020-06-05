@@ -25,13 +25,19 @@ public class MenuMedico extends javax.swing.JFrame {
     public static ClienteMedico cm;
     public static int bandera = 0;
     public static String texto;
-    public static int aux=0;//controla la existencia de pacientes registrados 
+    public static int aux=0;//controla la existencia de pacientes registrados
+    public static IndicadorDTO indicador;
+    public static String respuestaEnviarIndicador;
+    
+    
     /**
      * Creates new form MenuMedico
+     * @param objRemoto
+     * @param cm
      */
     public MenuMedico(GestionPacienteInt objRemoto, ClienteMedico cm) {
-        this.objRemoto = objRemoto;
-        this.cm = cm;
+        MenuMedico.objRemoto = objRemoto;
+        MenuMedico.cm = cm;
         initComponents();
     }
 
@@ -39,38 +45,47 @@ public class MenuMedico extends javax.swing.JFrame {
         initComponents();
     }
 
-    public void hilo() {
+    public void hilo() throws RemoteException {
+        respuestaEnviarIndicador = "";
         texto = "";
         bandera = 0;
         txtArea_seguimiento.setText("");
+        ;
         Timer timer = new Timer();
         TimerTask task = new TimerTask() {
 
             @Override
             public void run() {
-
+                
                 if (bandera == 1) {
                     timer.cancel();
                 } else {
+                    
                     try {
                         for (int i = 0; i < objRemoto.listarPacientes().size(); i++) {
                             int id = objRemoto.listarPacientes().get(i).getId();
                             String tipoId = objRemoto.listarPacientes().get(i).getTipo_id();
                             IndicadorDTO indicador = cm.iniciarSeguimiento(id);
+                            respuestaEnviarIndicador = objRemoto.enviarIndicadores(indicador);
                             texto = texto
                                     + "ID paciente: " + id
                                     + "\nFrecuencia cardiaca: " + indicador.getFrecuenciaCardiaca()
                                     + "\nFrecuencia respiratoria: " + indicador.getFrecuenciaRespiratoria()
-                                    + "\nTemperatura: " + indicador.getTemperatura() + "\n\n";
+                                    + "\nTemperatura: " + indicador.getTemperatura() 
+                                    + "\nRespuesta: "+respuestaEnviarIndicador
+                                    + "\n\n";
+                                    
                         }
                         txtArea_seguimiento.setText(texto);
                     } catch (RemoteException ex) {
                         Logger.getLogger(MenuMedico.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
-            }
-
+            } 
+            
+            
         };
+        //objRemoto.enviarIndicadores(null);
         timer.schedule(task, 0, 8000);
 
     }
@@ -240,10 +255,17 @@ public class MenuMedico extends javax.swing.JFrame {
 
     private void btn_iniciarSeguimientoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_iniciarSeguimientoActionPerformed
         // TODO add your handling code here:
+        
         if(aux == 0){
             JOptionPane.showMessageDialog(null, "No existen pacientes registrados.");
         }else{
-            hilo();
+            try {
+                //
+                hilo();
+                //objRemoto.enviarIndicadores(inidicador);
+            } catch (RemoteException ex) {
+                Logger.getLogger(MenuMedico.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         
     }//GEN-LAST:event_btn_iniciarSeguimientoActionPerformed

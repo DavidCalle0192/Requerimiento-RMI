@@ -75,7 +75,7 @@ public class ClsGestionPaciente extends UnicastRemoteObject implements GestionPa
     }
 
     @Override
-    public String enviarIndicadores(IndicadorDTO objIndicador) throws RemoteException {
+    public synchronized String enviarIndicadores(IndicadorDTO objIndicador) throws RemoteException {
         System.out.println("Ejecutando enviarIndicadores...");
         
         String respuesta = "";

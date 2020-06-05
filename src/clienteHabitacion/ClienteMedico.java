@@ -55,10 +55,10 @@ public class ClienteMedico {
          return false;
      }
      
-     public IndicadorDTO iniciarSeguimiento(int id) {
+     public IndicadorDTO iniciarSeguimiento(int id) throws RemoteException {
             inidicador = new IndicadorDTO(0,0,0,id);
-            
-                     Random fcr = new Random();
+                    
+                    Random fcr = new Random();
                     inidicador.setFrecuenciaCardiaca((int) (50 + fcr.nextFloat() * (90 - 50)));
                     //listaPaciente.get(i).setListaIndicadores(objIndicador);
                     
@@ -70,6 +70,14 @@ public class ClienteMedico {
                     inidicador.setTemperatura((float) (35.2 + ter.nextFloat() * (38.2 - 35.2)));
                     //listaPaciente.get(i).setListaIndicadores(objIndicador);
      
+                    
+                    //objRemoto.enviarIndicadores(indicador);
                     return inidicador;
+    }
+     
+    public void enviarinfo() throws RemoteException{
+    
+        IndicadorDTO aux=new IndicadorDTO(0, 0, 0, 1);
+        objRemoto.enviarIndicadores(aux);
     }
 }
