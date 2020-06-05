@@ -5,7 +5,7 @@
  */
 package clienteHabitacion;
 
-import static clienteHabitacion.ClienteHabitacion.objRemoto;
+
 import clienteHabitacion.utilidades.UtilidadesConsola;
 import clienteHabitacion.utilidades.UtilidadesRegistroC;
 import java.rmi.RemoteException;

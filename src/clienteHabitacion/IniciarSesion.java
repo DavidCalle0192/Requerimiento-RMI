@@ -141,12 +141,14 @@ public class IniciarSesion extends javax.swing.JFrame {
                 vista1_administrador v1 = new vista1_administrador(objRemoto);
                 v1.setVisible(true);
                 this.setVisible(false);
+                JOptionPane.showMessageDialog(null, "max: "+ objRemoto.obtenerMaxPacientes());
             }else {
                 ClienteMedico cm = new ClienteMedico();
-                objRemoto = cm.obtenerObjRemoto();
+                //objRemoto = cm.obtenerObjRemoto();
                 MenuMedico menu = new MenuMedico(objRemoto,cm);
                 menu.setVisible(true);
                 this.setVisible(false);
+                JOptionPane.showMessageDialog(null, "mAX: "+ objRemoto.obtenerMaxPacientes()) ;
             }
         } catch (RemoteException ex) {
             Logger.getLogger(IniciarSesion.class.getName()).log(Level.SEVERE, null, ex);

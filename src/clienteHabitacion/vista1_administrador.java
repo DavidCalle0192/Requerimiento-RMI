@@ -123,6 +123,7 @@ public class vista1_administrador extends javax.swing.JFrame {
                     Vista2_administrador vista2 = new Vista2_administrador(objRemoto);
                     vista2.cargarInformacion();//validar numero
                     vista2.setVisible(true);
+                    JOptionPane.showMessageDialog(null, "max: "+ objRemoto.obtenerMaxPacientes());
                     //this.dispose();
                 } catch (RemoteException ex) {
                     Logger.getLogger(vista1_administrador.class.getName()).log(Level.SEVERE, null, ex);

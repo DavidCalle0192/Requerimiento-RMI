@@ -5,6 +5,10 @@
  */
 package clienteHabitacion;
 
+import java.rmi.RemoteException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import servidorAlertas.sop_rmi.GestionPacienteInt;
 
 /**
@@ -122,11 +126,12 @@ public class MenuMedico extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_salirActionPerformed
 
     private void btn_registrarPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_registrarPacienteActionPerformed
-        // TODO add your handling code here:
-        RegistrarPaciente rp = new RegistrarPaciente(objRemoto, cm);
-        rp.setVisible(true);
-        this.setVisible(false);
-        
+
+            // TODO add your handling code here:
+            //RegistrarPaciente rp = new RegistrarPaciente(objRemoto, cm);
+            RegistarPaciente rp = new RegistarPaciente(objRemoto, cm);
+            rp.setVisible(true);
+            this.setVisible(false);
     }//GEN-LAST:event_btn_registrarPacienteActionPerformed
 
     /**
