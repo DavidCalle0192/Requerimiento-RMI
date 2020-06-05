@@ -218,6 +218,7 @@ public class MenuMedico extends javax.swing.JFrame {
 
     private void btn_registrarPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_registrarPacienteActionPerformed
 
+        aux=1;
         try {
             if (objRemoto.listarPacientes().size() == objRemoto.obtenerMaxPacientes()) {
                 JOptionPane.showMessageDialog(null, "Limite de registros alcanzados");
@@ -240,7 +241,7 @@ public class MenuMedico extends javax.swing.JFrame {
     private void btn_iniciarSeguimientoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_iniciarSeguimientoActionPerformed
         // TODO add your handling code here:
         if(aux == 0){
-            JOptionPane.showInternalMessageDialog(null, "No existen pacientes registrados.");
+            JOptionPane.showMessageDialog(null, "No existen pacientes registrados.");
         }else{
             hilo();
         }
